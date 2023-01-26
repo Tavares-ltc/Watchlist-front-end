@@ -23,6 +23,8 @@ const HeaderWrappler = styled.div`
   align-items: center;
   background-color: #171c25;
   z-index: 1;
+  filter: drop-shadow(30px 10px 20px #0c0a016d);
+
   h1 {
     color: #de0f62 ;
     font-size: 46px;
