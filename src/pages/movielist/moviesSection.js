@@ -1,20 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import { MovieBox } from "../../components/movieBox";
-export function MoviesSection({ movies }) {
+export function MoviesSection({ movies, inView }) {
   return (
     <>
       <MoviesSectionWrappler>
         <MoviesWrappler>
-          {movies?.results?.map((data) => (
+          {movies?.map((data, index) => (
             <>
-              <MovieBox
+              <MovieBox key={index} 
                 poster_src={
                   data.poster_path
                     ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
                     : "https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie.jpg"
                 }
+                genres={data.genres}
               />
+              {(movies.length - 10 == index)&& <div ref={inView}/>}
             </>
           ))}
         </MoviesWrappler>

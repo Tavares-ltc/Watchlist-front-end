@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-export function MovieBox({poster_src}){
+export function MovieBox({poster_src, genres}){
     return (
         <>
         <MovieBoxWrappler>
             <img src={poster_src}/>
             <GenreWrappler>
-
+            <h1>{genres[0]}</h1>
+            <h1>{genres[1]}</h1>
             </GenreWrappler>
         </MovieBoxWrappler>
         </>
@@ -15,10 +16,10 @@ export function MovieBox({poster_src}){
 }
 
 const MovieBoxWrappler = styled.div`
-width: 220px;
+width: 240px;
 img {
     width: 90%;
-    height: auto;
+    height: 297px;
     cursor: pointer;
     
 }

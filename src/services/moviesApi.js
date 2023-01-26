@@ -1,6 +1,6 @@
 import api from "./api";
 
-export async function getMovies() {
-  const response = await api.get("/movies");
+export async function getMovies(page = 1) {
+  const response = await api.get(`/movies?page=${page}`);
   return response.data;
 }
