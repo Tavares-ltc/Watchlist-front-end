@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Header from "../../components/header";
+import Header from "../../components/Header";
 import useMovies from "../../hooks/api/useMovies";
-import { MoviesSection } from "./moviesSection";
+import { MoviesSection } from "./MoviesSection";
 import { useInView } from "react-intersection-observer";
 import { useQuery } from "../../hooks/useQuery";
-import { MovieDetails } from "./movieDetailsModal";
+import { MovieDetails } from "./MovieDetailsModal";
 import usePopularMovies from "../../hooks/api/usePopularMovies";
 import { SyncLoader } from "react-spinners";
 import useNowPlayingMovies from "../../hooks/api/useNowPlayingMovies";
@@ -75,6 +75,7 @@ export default function Movielist({ moviesCategory }) {
         <MovieDetails movieId={movieId} />
         <MoviesSection
           movies={movies}
+          setMovieId={setMovieId}
           inView={ref}
           hasMorePages={hasMorePages}
         />

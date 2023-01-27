@@ -1,13 +1,13 @@
 import moviesApi from "../../services/moviesApi";
 import useAsync from "../useAsync";
 
-export default function useMovieDetails(movieId) {
+export default function useMovieDetails() {
     const {
       data: details,
       loading: detailsLoading,
       error: detailsError,
       act: getMovieDetails,
-    } = useAsync(() => moviesApi.getMovieDetails(movieId));
+    } = useAsync((movieId) => moviesApi.getMovieDetails(movieId));
   
     return {
       detailsLoading,

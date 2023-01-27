@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Footer } from "../../components/footer";
-import { Modal } from "../../components/modal";
-import { MovieBox } from "../../components/movieBox";
+import { Footer } from "../../components/Footer";
+import { Modal } from "../../components/Modal";
+import { MovieBox } from "../../components/MovieBox";
 
-export function MoviesSection({ movies, inView, hasMorePages }) {
+export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
   const navigate = useNavigate();
   const location = useLocation();
   return (
@@ -20,7 +20,7 @@ export function MoviesSection({ movies, inView, hasMorePages }) {
                   onClick={() => {
                     const path = `${location.pathname}?movieId=${data.id}`;
                     navigate(path);
-                    window.location.reload();
+                    setMovieId(data.id);
                   }}
                   ref={inView}
                 />
@@ -29,8 +29,7 @@ export function MoviesSection({ movies, inView, hasMorePages }) {
           ))}
         </MoviesWrappler>
       </MoviesSectionWrappler>
-      {!hasMorePages && <Footer/>}
-
+      {!hasMorePages && <Footer />}
     </>
   );
 }

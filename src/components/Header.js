@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { LoginButton } from "./loginButton";
+import { LoginButton } from "./LoginButton";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 

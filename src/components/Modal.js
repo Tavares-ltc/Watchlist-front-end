@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
 
-export function Modal({ showModal, children }) {
-  const [isVisible, setIsVisible] = useState(showModal);
+export function Modal({ children, isVisible, setIsVisible }) {
+  
 
   if (isVisible)
     return (
