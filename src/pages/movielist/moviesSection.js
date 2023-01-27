@@ -1,35 +1,42 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Footer } from "../../components/footer";
 import { Modal } from "../../components/modal";
 import { MovieBox } from "../../components/movieBox";
-export function MoviesSection({ movies, inView }) {
+
+export function MoviesSection({ movies, inView, hasMorePages }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <>
       <MoviesSectionWrappler>
         <MoviesWrappler>
           {movies?.map((data, index) => (
             <>
-              <MovieBox
-                key={index}
-                poster_src={
-                  data.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-                    : "https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie.jpg"
-                }
-                genres={data.genres}
-                movieId={data.id}
-              />
-              {movies.length - 10 == index && <div ref={inView} />}
+              <MovieBox key={index} genres={data.genres}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                  onClick={() => {
+                    const path = `${location.pathname}?movieId=${data.id}`;
+                    navigate(path);
+                    window.location.reload();
+                  }}
+                  ref={inView}
+                />
+              </MovieBox>
             </>
           ))}
         </MoviesWrappler>
       </MoviesSectionWrappler>
+      {!hasMorePages && <Footer/>}
+
     </>
   );
 }
 
 const MoviesSectionWrappler = styled.div`
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,5 +47,5 @@ const MoviesWrappler = styled.div`
   width: 80%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, auto));
-  gap: 20px;
+  gap: 40px;
 `;

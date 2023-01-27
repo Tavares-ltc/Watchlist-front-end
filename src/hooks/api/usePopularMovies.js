@@ -1,13 +1,13 @@
 import moviesApi from "../../services/moviesApi";
 import useAsync from "../useAsync";
 
-export default function usePopularMovies(page) {
+export default function usePopularMovies() {
     const {
       data: popularMovies,
       loading: popularMoviesLoading,
       error: popularMoviesError,
       act: getPopularMovies,
-    } = useAsync(() => moviesApi.getPopularMovies(page));
+    } = useAsync((page) => moviesApi.getPopularMovies(page));
   
     return {
         popularMoviesLoading,

@@ -8,7 +8,7 @@ export function Modal({ showModal, children }) {
   if (isVisible)
     return (
       <ModalContainer onClick={() => setIsVisible(false)}>
-        <ModalWrappler>
+        <ModalWrappler onClick={(event) => {event.stopPropagation()}}>
           <CloseButton>
             <IoMdClose color='white' size={"20px"} onClick={()=> {setIsVisible(false)}} />
           </CloseButton>
@@ -30,11 +30,11 @@ const ModalContainer = styled.div`
 
 const ModalWrappler = styled.div`
   filter: drop-shadow(30px 10px 20px #000000);
-  width: 120vh;
-  height: 70vh;
+  width: 1250px;
+  height: 780px;
   border-radius: 20px;
   background-color: #171c25;
-  padding: 20px;
+  padding: 30px 60px;
   h1 {
     color: #fe6828;
     font-size: 50px;

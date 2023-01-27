@@ -29,11 +29,12 @@ export function MovieDetails({ movieId }) {
                 height='430'
                 src={`https://www.youtube.com/embed/${(details?.videos?.results[0]?.key)? `${details?.videos.results[0].key}` : "dQw4w9WgXcQ" }`}
               ></iframe>
-              {(!details?.videos.results[0].key) && <h3>Sorry there is no video available  &#128546;</h3>}
-              <Container>
+              {(!details?.videos?.results[0]?.key) && <h3>Sorry there is no video available  &#128546;</h3>}
+              <Overview>
                 <h1>Overview: </h1>
                 <h2>{details?.overview}</h2>
-              </Container>
+                {!details?.overview && <h2>This movie doesn't have a overview yet.</h2>}
+              </Overview>
             </DetailsWrappler>
           </DetailsContainer>
         </DetailsModalWrappler>
@@ -43,26 +44,26 @@ export function MovieDetails({ movieId }) {
 
 const DetailsModalWrappler = styled.div`
   z-index: 1;
-  margin-left: 10px;
   img {
-    width: 350px;
+    width: 365px;
     height: auto;
     outline: 10px solid white;
     margin-bottom: 15px;
+    margin: 10px;
   }
 `;
 const DetailsContainer = styled.div`
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
-  height: 100%;
+  height: 90%;
 `;
 const DetailsWrappler = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
   height: 100%;
   h1 {
     font-size: 20px;
@@ -90,6 +91,28 @@ const Container = styled.div`
     margin-bottom: 20px;
   }
   max-width: 640px;
+`;
+const Overview = styled.div`
+display: flex;
+flex-direction: column;
+width: 100%;
+text-align: start;
+  h1 {
+    font-size: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  max-width: 640px;
+  max-height: 170px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+}
 `;
 
 const TextContainer = styled.div`

@@ -3,17 +3,13 @@ import { generatePath, Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 
-export function MovieBox({ poster_src, genres, movieId }) {
+export function MovieBox({ children, genres, movieId }) {
     const navigate = useNavigate()
     const location = useLocation()
     return (
     <>
       <MovieBoxWrappler>
-        <img src={poster_src} onClick={() => {
-            const path = `${location.pathname}?movieId=${movieId}`
-            navigate(path)
-            window.location.reload()
-        } }/>
+        {children}
         <GenreWrappler>
           <h1>{genres[0]}</h1>
           <h1>{genres[1]}</h1>
