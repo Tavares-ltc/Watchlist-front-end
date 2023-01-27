@@ -72,7 +72,7 @@ export default function Movielist({ moviesCategory }) {
     <>
       <BackgroundWrappler>
         <Header />
-        <MovieDetails movieId={movieId} />
+        <MovieDetails movieId={movieId} setMovieId={setMovieId} />
         <MoviesSection
           movies={movies}
           setMovieId={setMovieId}

@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SyncLoader } from "react-spinners";
 import styled from "styled-components";
 import { Modal } from "../../components/Modal";
 import useMovieDetails from "../../hooks/api/useMovieDetail";
-export function MovieDetails({ movieId }) {
+export function MovieDetails({ movieId, setMovieId }) {
   const { getMovieDetails } = useMovieDetails();
   const [details, setDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-
+  const defaultVideo = "dQw4w9WgXcQ";
+  const youtubeEndpoint = "https://www.youtube.com/embed/";
   useEffect(() => {
-    if(movieId){
+    if (movieId) {
       setLoading(true);
       fechMovieData(movieId);
-      filterOfficilaTrailer();
+      filterOfficilaTrailer(details);
       setIsVisible(true);
       setTimeout(() => {
         setLoading(false);
@@ -21,7 +22,7 @@ export function MovieDetails({ movieId }) {
     }
   }, [movieId]);
 
-
+  console.log(movieId);
   if (loading) {
     return (
       <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
@@ -33,7 +34,11 @@ export function MovieDetails({ movieId }) {
   }
 
   return (
-    <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
+    <Modal
+      isVisible={isVisible}
+      setIsVisible={setIsVisible}
+      setMovieId={setMovieId}
+    >
       <DetailsModalWrappler>
         <h1>{details?.title}</h1>
         <DetailsContainer>
@@ -50,13 +55,13 @@ export function MovieDetails({ movieId }) {
             <iframe
               width='640'
               height='430'
-              src={`https://www.youtube.com/embed/${
-                details?.videos?.results[0]?.key
-                  ? `${details?.videos.results[0].key}`
-                  : "dQw4w9WgXcQ"
+              src={`${youtubeEndpoint}${
+                details?.videos?.results[0].key
+                  ? details?.videos?.results[0].key
+                  : defaultVideo
               }`}
             ></iframe>
-            {!details?.videos?.results[0]?.key && (
+            {!details?.videos?.results[0].key && (
               <h3>Sorry there is no video available &#128546;</h3>
             )}
             <Overview>
@@ -72,7 +77,7 @@ export function MovieDetails({ movieId }) {
     </Modal>
   );
 
-  function filterOfficilaTrailer(movieDetails) {
+  function filterOfficilaTrailer(details) {
     if (details?.videos?.results) {
       details?.videos?.results.filter(
         (video) => video.name === "Official Trailer"

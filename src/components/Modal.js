@@ -2,20 +2,25 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
 
-export function Modal({ children, isVisible, setIsVisible }) {
+export function Modal({ children, isVisible, setIsVisible, setMovieId }) {
   
-
   if (isVisible)
     return (
-      <ModalContainer onClick={() => setIsVisible(false)}>
+      <ModalContainer onClick={closeModal}>
         <ModalWrappler onClick={(event) => {event.stopPropagation()}}>
           <CloseButton>
-            <IoMdClose color='white' size={"20px"} onClick={()=> {setIsVisible(false)}} />
+            <IoMdClose color='white' size={"20px"} onClick={closeModal} />
           </CloseButton>
           {children}
         </ModalWrappler>
       </ModalContainer>
     );
+
+
+    function closeModal(){
+      setIsVisible(false)
+      setMovieId()
+    }
 }
 const ModalContainer = styled.div`
   width: 100vw;
