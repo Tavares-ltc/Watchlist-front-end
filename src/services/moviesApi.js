@@ -29,4 +29,9 @@ async function getTopRatedMovies(page = 1) {
   const response = await api.get(`/movies/toprated?page=${page}`);
   return response.data;
 }
-export default {getMovies, getMovieDetails, getPopularMovies, getNowPlayingMovies, getUpcomingMovies, getTopRatedMovies}
+
+async function searchMovies(page = 1,query = "", language = "en-US" ) {
+  const response = await api.get(`/movies/search?page=${page}&language=${language}&query=${query}`);
+  return response.data;
+}
+export default {getMovies, getMovieDetails, getPopularMovies, getNowPlayingMovies, getUpcomingMovies, getTopRatedMovies, searchMovies}

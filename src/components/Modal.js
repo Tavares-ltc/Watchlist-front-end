@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
 
-export function Modal({ children, isVisible, setIsVisible, setMovieId }) {
-  
+export function Modal({ children, isVisible, closeFunction, ...props}) {
+  if(isVisible && !closeFunction){
+
+    return (
+      <ModalContainer>
+        <ModalWrappler>
+          {children}
+        </ModalWrappler>
+      </ModalContainer>
+    );
+  }
   if (isVisible)
     return (
-      <ModalContainer onClick={closeModal}>
-        <ModalWrappler onClick={(event) => {event.stopPropagation()}}>
+      <ModalContainer onClick={closeFunction}>
+        <ModalWrappler onClick={(event) => {event.stopPropagation()}} {...props}>
           <CloseButton>
-            <IoMdClose color='white' size={"20px"} onClick={closeModal} />
+            <IoMdClose color='white' size={"20px"} onClick={closeFunction} />
           </CloseButton>
           {children}
         </ModalWrappler>
       </ModalContainer>
     );
-
-
-    function closeModal(){
-      setIsVisible(false)
-      setMovieId()
-    }
 }
 const ModalContainer = styled.div`
   width: 100vw;
@@ -35,8 +38,8 @@ const ModalContainer = styled.div`
 
 const ModalWrappler = styled.div`
   filter: drop-shadow(30px 10px 20px #000000);
-  width: 1250px;
-  height: 780px;
+  width: ${props => props.width? `${props.width}` : "1250px"};
+  height: ${props => props.heigth? `${props.heigth}` : "780px"};
   border-radius: 20px;
   background-color: #171c25;
   padding: 30px 60px;

@@ -28,6 +28,10 @@ function App() {
             path='/toprated'
             element={<Movielist moviesCategory={"Top Rated"} />}
           />
+          <Route
+            path='/search'
+            element={<Movielist moviesCategory={"Search"} />}
+          />
         </Routes>
       </Router>
     </>

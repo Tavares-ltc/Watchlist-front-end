@@ -3,9 +3,12 @@ import styled from "styled-components";
 import { LoginButton } from "./LoginButton";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import useSearchMovie from "../hooks/api/useSearch";
 
-export default function Header() {
+export default function Header({setSearchQuery}) {
   const navigate = useNavigate();
+  const { searchMovies } = useSearchMovie();
+
   return (
     <>
       <HeaderWrappler>
@@ -43,15 +46,17 @@ export default function Header() {
           >
             Upcoming
           </h2>
-          <h2 onClick={() => {
+          <h2
+            onClick={() => {
               navigate("/toprated");
               window.location.reload();
-            }}>
+            }}
+          >
             Top Rated
           </h2>
         </NavBar>
         <SearchBar>
-          <input placeholder='Search...' />
+          <input placeholder='Search...' onChange={searchMovie} onClick={(event)=> event.target.value = ""} />
           <IconWrappler>
             <BsSearch />
           </IconWrappler>
@@ -63,6 +68,22 @@ export default function Header() {
       </HeaderWrappler>
     </>
   );
+
+  function searchMovie(event) {
+    if (event.target?.value?.length > 0) {
+      const starterText = event.target?.value;
+      setTimeout(() => {
+        const newText = event.target?.value;
+        if (starterText === newText) {
+          const query = encodeURIComponent(starterText);
+          // to show the encoded URI, it was necessary to do the process twice as react-route-dom does a decoding process as seen in history issues #505
+          navigate(`/search?term=${encodeURIComponent(query)}`)
+          window.location.reload()
+        }
+      }, [800]);
+  
+    }
+  }
 }
 
 const HeaderWrappler = styled.div`
@@ -109,7 +130,7 @@ const NavBar = styled.div`
   }
 `;
 const SearchBar = styled.div`
-    position: relative;
+  position: relative;
   input {
     all: unset;
     background-color: white;
@@ -136,9 +157,9 @@ const ConfigBar = styled.div`
 `;
 
 const IconWrappler = styled.div`
-position: absolute;
-right: 0;
-top: 0;
-margin-top: 10px;
-margin-right: 8px;
-`
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 12px;
+  margin-right: 8px;
+`;

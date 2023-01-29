@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SyncLoader } from "react-spinners";
 import styled from "styled-components";
 import { Modal } from "../../components/Modal";
-import useMovieDetails from "../../hooks/api/useMovieDetail";
+import useMovieDetails from "../../hooks/api/useMovieDetails";
+
 export function MovieDetails({ movieId, setMovieId }) {
   const { getMovieDetails } = useMovieDetails();
   const [details, setDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const defaultVideo = "dQw4w9WgXcQ";
-  const youtubeEndpoint = "https://www.youtube.com/embed/";
+
   useEffect(() => {
     if (movieId) {
       setLoading(true);
@@ -22,7 +22,6 @@ export function MovieDetails({ movieId, setMovieId }) {
     }
   }, [movieId]);
 
-  console.log(movieId);
   if (loading) {
     return (
       <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
@@ -34,11 +33,7 @@ export function MovieDetails({ movieId, setMovieId }) {
   }
 
   return (
-    <Modal
-      isVisible={isVisible}
-      setIsVisible={setIsVisible}
-      setMovieId={setMovieId}
-    >
+    <Modal isVisible={isVisible} closeFunction={closeModal}>
       <DetailsModalWrappler>
         <h1>{details?.title}</h1>
         <DetailsContainer>
@@ -48,28 +43,19 @@ export function MovieDetails({ movieId, setMovieId }) {
             />
             <TextContainer>
               <h1>Release date:</h1>
-              <h2>({details?.release_date})</h2>
+              <h2>({releaseDate(details?.release_date)})</h2>
             </TextContainer>
           </Container>
           <DetailsWrappler>
             <iframe
               width='640'
               height='430'
-              src={`${youtubeEndpoint}${
-                details?.videos?.results[0].key
-                  ? details?.videos?.results[0].key
-                  : defaultVideo
-              }`}
-            ></iframe>
-            {!details?.videos?.results[0].key && (
-              <h3>Sorry there is no video available &#128546;</h3>
-            )}
+              src={videoUrl(details?.videos?.results[0]?.key)}
+            />
+            {showHasVideoAbaliableMessage(details?.videos?.results[0]?.key)}
             <Overview>
               <h1>Overview: </h1>
-              <h2>{details?.overview}</h2>
-              {!details?.overview && (
-                <h2>This movie doesn't have a overview yet.</h2>
-              )}
+              {showOverview()}
             </Overview>
           </DetailsWrappler>
         </DetailsContainer>
@@ -77,18 +63,50 @@ export function MovieDetails({ movieId, setMovieId }) {
     </Modal>
   );
 
-  function filterOfficilaTrailer(details) {
-    if (details?.videos?.results) {
-      details?.videos?.results.filter(
-        (video) => video.name === "Official Trailer"
-      );
-    }
+  function closeModal() {
+    setIsVisible(false);
+    setMovieId();
   }
 
   async function fechMovieData(movieId) {
     const movieData = await getMovieDetails(movieId);
     setDetails(movieData);
   }
+}
+
+function releaseDate(date, format = "en-Us") {
+  if (date) {
+    const arrDate = date.split("-");
+
+    if (format === "pt-BR") return `${arrDate[2]}/${arrDate[1]}/${arrDate[0]}`;
+    return `${arrDate[1]}/${arrDate[2]}/${arrDate[0]}`;
+  }
+}
+
+function filterOfficilaTrailer(details) {
+  if (details?.videos?.results) {
+    details?.videos?.results.filter(
+      (video) => video.name === "Official Trailer"
+    );
+  }
+}
+function showOverview(overview) {
+  if (overview) return <h2>{overview}</h2>;
+  if (!overview) return <h2>This movie doesn't have a overview yet.</h2>;
+}
+
+function showHasVideoAbaliableMessage(key) {
+  if (!key) <h3>Sorry there is no video available &#128546;</h3>;
+}
+
+function videoUrl(key) {
+  const defaultKey = "dQw4w9WgXcQ";
+  const youtubeEndpoint = "https://www.youtube.com/embed/";
+
+  if (key) {
+    return String(youtubeEndpoint + key);
+  }
+  return String(youtubeEndpoint + defaultKey);
 }
 
 const DetailsModalWrappler = styled.div`
@@ -114,6 +132,7 @@ const DetailsWrappler = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   height: 100%;
+  margin-left: 40px;
   h1 {
     font-size: 20px;
     margin-top: 20px;
