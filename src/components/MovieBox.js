@@ -2,11 +2,10 @@ import React from "react";
 import { generatePath, Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-
 export function MovieBox({ children, genres, movieId }) {
-    const navigate = useNavigate()
-    const location = useLocation()
-    return (
+  const navigate = useNavigate();
+  const location = useLocation();
+  return (
     <>
       <MovieBoxWrappler>
         {children}
@@ -24,6 +23,9 @@ const MovieBoxWrappler = styled.div`
   img {
     width: 90%;
     height: 297px;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
     cursor: pointer;
   }
   &:hover {

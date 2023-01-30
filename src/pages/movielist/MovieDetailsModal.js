@@ -31,6 +31,7 @@ export function MovieDetails({ movieId, setMovieId }) {
       </Modal>
     );
   }
+  console.log()
 
   return (
     <Modal isVisible={isVisible} closeFunction={closeModal}>
@@ -55,7 +56,7 @@ export function MovieDetails({ movieId, setMovieId }) {
             {showHasVideoAbaliableMessage(details?.videos?.results[0]?.key)}
             <Overview>
               <h1>Overview: </h1>
-              {showOverview()}
+              {showOverview(details?.overview)}
             </Overview>
           </DetailsWrappler>
         </DetailsContainer>
@@ -117,6 +118,9 @@ const DetailsModalWrappler = styled.div`
     outline: 10px solid white;
     margin-bottom: 15px;
     margin: 10px;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
   }
 `;
 const DetailsContainer = styled.div`

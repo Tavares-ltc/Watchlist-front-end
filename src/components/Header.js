@@ -1,18 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { LoginButton } from "./LoginButton";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import useSearchMovie from "../hooks/api/useSearch";
+import { WatchlistLogo } from "./WatchlistLogo";
+import { Button } from "./Button";
 
-export default function Header({setSearchQuery}) {
+export default function Header({ setSearchQuery }) {
   const navigate = useNavigate();
-  const { searchMovies } = useSearchMovie();
 
   return (
     <>
       <HeaderWrappler>
-        <h1>Watchlist</h1>
+        <WatchlistLogo />
         <NavBar>
           <h2
             onClick={() => {
@@ -32,7 +31,7 @@ export default function Header({setSearchQuery}) {
           </h2>
           <h2
             onClick={() => {
-              navigate("/nowplaying");
+              navigate("/now_playing");
               window.location.reload();
             }}
           >
@@ -48,7 +47,7 @@ export default function Header({setSearchQuery}) {
           </h2>
           <h2
             onClick={() => {
-              navigate("/toprated");
+              navigate("/top_rated");
               window.location.reload();
             }}
           >
@@ -56,14 +55,24 @@ export default function Header({setSearchQuery}) {
           </h2>
         </NavBar>
         <SearchBar>
-          <input placeholder='Search...' onChange={searchMovie} onClick={(event)=> event.target.value = ""} />
+          <input
+            placeholder='Search...'
+            onChange={searchMovie}
+            onClick={(event) => (event.target.value = "")}
+          />
           <IconWrappler>
             <BsSearch />
           </IconWrappler>
         </SearchBar>
         <ConfigBar>
           <h2>en-US</h2>
-          <LoginButton />
+          <Button
+            text={"LOGIN"}
+            onClick={() => {
+              navigate("/login");
+              window.location.reload();
+            }}
+          />
         </ConfigBar>
       </HeaderWrappler>
     </>
@@ -77,11 +86,10 @@ export default function Header({setSearchQuery}) {
         if (starterText === newText) {
           const query = encodeURIComponent(starterText);
           // to show the encoded URI, it was necessary to do the process twice as react-route-dom does a decoding process as seen in history issues #505
-          navigate(`/search?term=${encodeURIComponent(query)}`)
-          window.location.reload()
+          navigate(`/search?term=${encodeURIComponent(query)}`);
+          window.location.reload();
         }
       }, [800]);
-  
     }
   }
 }
@@ -101,16 +109,6 @@ const HeaderWrappler = styled.div`
   background-color: #171c25;
   z-index: 1;
   filter: drop-shadow(30px 10px 20px #0c0a016d);
-
-  h1 {
-    color: #de0f62;
-    font-size: 46px;
-    cursor: pointer;
-    mix-blend-mode: lighten;
-    background-image: linear-gradient(to right, #de0f62, #fe6828);
-    -webkit-background-clip: text;
-    color: transparent;
-  }
 
   h2 {
     font-size: 16px;

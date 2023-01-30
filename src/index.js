@@ -4,6 +4,7 @@ import App from "./App";
 
 import "./assets/styles/reset.css";
 import "./assets/styles/style.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

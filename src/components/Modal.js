@@ -7,7 +7,7 @@ export function Modal({ children, isVisible, closeFunction, ...props}) {
 
     return (
       <ModalContainer>
-        <ModalWrappler>
+        <ModalWrappler {...props}>
           {children}
         </ModalWrappler>
       </ModalContainer>
@@ -39,7 +39,7 @@ const ModalContainer = styled.div`
 const ModalWrappler = styled.div`
   filter: drop-shadow(30px 10px 20px #000000);
   width: ${props => props.width? `${props.width}` : "1250px"};
-  height: ${props => props.heigth? `${props.heigth}` : "780px"};
+  height: ${props => props.height? `${props.height}` : "780px"};
   border-radius: 20px;
   background-color: #171c25;
   padding: 30px 60px;

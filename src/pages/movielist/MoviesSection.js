@@ -16,6 +16,7 @@ export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
             <>
               <MovieBox key={index} genres={data.genres}>
                 <img
+                  draggable={false}
                   src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
                   onClick={() => {
                     const path = `${location.pathname}?movieId=${data.id}`;
