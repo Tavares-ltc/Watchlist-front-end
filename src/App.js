@@ -37,8 +37,8 @@ function App() {
               path='/search'
               element={<MovielistPage moviesCategory={"search"} />}
             />
-            <Route path='/login' element={<LoginPage action="login" />} />
-            <Route path='/signup' element={<LoginPage action="signup" />} />
+            <Route path='/login' element={<LoginPage action='login' />} />
+            <Route path='/signup' element={<LoginPage action='signup' />} />
           </Routes>
         </Router>
       </AuthContextProvider>

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { WatchlistLogo } from "./WatchlistLogo";
 import { Button } from "./Button";
+import { AuthContext } from "../contexts/AuthContext";
+import { Modal } from "./Modal";
 
-export default function Header({ setSearchQuery }) {
+export default function Header({ setSearchQuery, setIsAccountModalVisible }) {
   const navigate = useNavigate();
-
+  const { userData } = useContext(AuthContext);
   return (
     <>
       <HeaderWrappler>
@@ -66,13 +68,7 @@ export default function Header({ setSearchQuery }) {
         </SearchBar>
         <ConfigBar>
           <h2>en-US</h2>
-          <Button
-            text={"LOGIN"}
-            onClick={() => {
-              navigate("/login");
-              window.location.reload();
-            }}
-          />
+          <LoginButton userData={userData} navigate={navigate} setIsAccountModalVisible={setIsAccountModalVisible} />
         </ConfigBar>
       </HeaderWrappler>
     </>
@@ -91,6 +87,27 @@ export default function Header({ setSearchQuery }) {
         }
       }, [800]);
     }
+  }
+}
+
+function LoginButton({ userData, navigate, setIsAccountModalVisible }) {
+  if (userData.name) {
+    return (
+      <>
+          <UserDataWrappler onClick={()=> setIsAccountModalVisible(true)}>
+            <img src={userData.image} />
+          </UserDataWrappler>
+      </>
+    );
+  } else {
+    return (
+      <Button
+        text={"LOGIN"}
+        onClick={() => {
+          navigate("/login");
+        }}
+      />
+    );
   }
 }
 
@@ -160,4 +177,31 @@ const IconWrappler = styled.div`
   top: 0;
   margin-top: 12px;
   margin-right: 8px;
+`;
+
+const UserDataWrappler = styled.div`
+  width: 100px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  img {
+    width: 45px;
+    height: 45px;
+    border-radius: 30px;
+    outline: 2px solid #de0f62;
+  }
+`;
+const AccountMenuContainer = styled.div`
+  background-color: red;
+  height: 60px;
+`;
+const AccountMenu = styled.div`
+  background-color: blue;
+  width: 400px;
+  display: flex;
+  height: 100px;
+  max-width: 100px;
+  padding-top: 80px;
 `;

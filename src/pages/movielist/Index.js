@@ -9,6 +9,8 @@ import { MovieDetails } from "./MovieDetailsModal";
 import { SyncLoader } from "react-spinners";
 import useSearchMovie from "../../hooks/api/useSearch";
 import { Background } from "../../components/Background";
+import { Modal } from "../../components/Modal";
+import { AccountMenuModal } from "./AccountMenuModal";
 
 export default function MovielistPage({ moviesCategory }) {
   const [moviesCategoryType, setMoviesCategoryType] = useState(moviesCategory);
@@ -20,12 +22,13 @@ export default function MovielistPage({ moviesCategory }) {
   const { searchMovies } = useSearchMovie();
   const [movies, setMovies] = useState([]);
   const [hasMorePages, setHasMorePages] = useState(true);
-  
+
+  const [isAccountModalVisible, setIsAccountModalVisible] = useState(false)
+
   let query = useQuery();
   const [movieId, setMovieId] = useState(query.get("movieId"));
   const [searchQuery, setSearchQuery] = useState(query.get("term"));
-  
-  
+
   useEffect(() => {
     fechResultsFromSearch();
   }, [searchQuery]);
@@ -33,7 +36,6 @@ export default function MovielistPage({ moviesCategory }) {
   useEffect(() => {
     fechData(moviesCategoryType);
   }, [inView === true]);
-
 
   if (movies.length === 0) {
     return (
@@ -50,7 +52,8 @@ export default function MovielistPage({ moviesCategory }) {
   return (
     <>
       <Background>
-        <Header/>
+        <Header setIsAccountModalVisible={setIsAccountModalVisible} />
+        <AccountMenuModal isAccountModalVisible={isAccountModalVisible} setIsAccountModalVisible={setIsAccountModalVisible}/>
         <MovieDetails movieId={movieId} setMovieId={setMovieId} />
         <MoviesSection
           movies={movies}
@@ -73,7 +76,11 @@ export default function MovielistPage({ moviesCategory }) {
       setCurrentPage(1);
       const promise = await searchMovies(currentPage, searchQuery);
       if (promise.results.length < 1)
-        if (!alert("An error occurred while searching for your movie. You will need to reload the page. 😥")) {
+        if (
+          !alert(
+            "An error occurred while searching for your movie. You will need to reload the page. 😥"
+          )
+        ) {
           window.location.reload();
         }
       setMovies(promise.results);
@@ -82,7 +89,7 @@ export default function MovielistPage({ moviesCategory }) {
   async function fechData(moviesCategory) {
     let promise;
 
-    if(moviesCategory === "search") {
+    if (moviesCategory === "search") {
       promise = await searchMovies(currentPage, searchQuery);
     } else {
       promise = await getMovies(moviesCategory, "en-Us", currentPage);
@@ -95,7 +102,6 @@ export default function MovielistPage({ moviesCategory }) {
     setCurrentPage(currentPage + 1);
   }
 }
-
 
 const LoadingContainer = styled.div`
   width: 100vw;

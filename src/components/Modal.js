@@ -6,7 +6,7 @@ export function Modal({ children, isVisible, closeFunction, ...props}) {
   if(isVisible && !closeFunction){
 
     return (
-      <ModalContainer>
+      <ModalContainer {...props}>
         <ModalWrappler {...props}>
           {children}
         </ModalWrappler>
@@ -15,7 +15,7 @@ export function Modal({ children, isVisible, closeFunction, ...props}) {
   }
   if (isVisible)
     return (
-      <ModalContainer onClick={closeFunction}>
+      <ModalContainer onClick={closeFunction} {...props}>
         <ModalWrappler onClick={(event) => {event.stopPropagation()}} {...props}>
           <CloseButton>
             <IoMdClose color='white' size={"20px"} onClick={closeFunction} />
@@ -32,8 +32,8 @@ const ModalContainer = styled.div`
   z-index: 1;
   background-color: rgba(17, 17, 17, 0.23);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: ${props => props.justifyContent? `${props.justifyContent}` : "center"};
+  align-items: ${props => props.alignItems? `${props.alignItems}` : "center"};
 `;
 
 const ModalWrappler = styled.div`
@@ -43,9 +43,10 @@ const ModalWrappler = styled.div`
   border-radius: 20px;
   background-color: #171c25;
   padding: 30px 60px;
+  margin: 80px 10%;
   h1 {
     color: #fe6828;
-    font-size: 50px;
+    font-size: ${props => props.fontSize? `${props.fontSize}` : "50px"};
   }
 `;
 

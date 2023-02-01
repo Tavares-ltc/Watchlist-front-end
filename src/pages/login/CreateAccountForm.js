@@ -114,12 +114,6 @@ export function CreateAccountForm() {
     const inputName = event.target.name;
     const value = event.target.value;
     setUserData({ ...userData, [inputName]: value });
-    if (userData.name.length < 3) {
-      setErrorAlert({
-        ...errorAlert,
-        name: "Name must have more than 3 letters.",
-      });
-    }
   }
   function createAccount(event) {
     event.preventDefault();
@@ -195,7 +189,7 @@ export const ButtonContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const InputWrappler = styled.div`
+export const InputWrappler = styled.div`
   min-height: 96px;
   display: flex;
   flex-direction: column;
