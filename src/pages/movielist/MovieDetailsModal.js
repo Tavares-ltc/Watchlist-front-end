@@ -3,18 +3,21 @@ import { SyncLoader } from "react-spinners";
 import styled from "styled-components";
 import { Modal } from "../../components/Modal";
 import useMovieDetails from "../../hooks/api/useMovieDetails";
+import { MoviePoster } from "./MoviePoster";
 
 export function MovieDetails({ movieId, setMovieId }) {
-  const { getMovieDetails } = useMovieDetails();
+  const { getMovieDetails } = useMovieDetails({});
   const [details, setDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
+    async function fechMovieData(movieId) {
+      const movieData = await getMovieDetails(movieId);
+     return setDetails(movieData);
+    }
     if (movieId) {
+      fechMovieData(movieId)
       setLoading(true);
-      fechMovieData(movieId);
-      filterOfficilaTrailer(details);
       setIsVisible(true);
       setTimeout(() => {
         setLoading(false);
@@ -31,7 +34,6 @@ export function MovieDetails({ movieId, setMovieId }) {
       </Modal>
     );
   }
-  console.log()
 
   return (
     <Modal isVisible={isVisible} closeFunction={closeModal}>
@@ -39,40 +41,49 @@ export function MovieDetails({ movieId, setMovieId }) {
         <h1>{details?.title}</h1>
         <DetailsContainer>
           <Container>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${details?.poster_path}`}
-            />
+            <MoviePoster details={details} />
             <TextContainer>
               <h1>Release date:</h1>
               <h2>({releaseDate(details?.release_date)})</h2>
             </TextContainer>
           </Container>
           <DetailsWrappler>
-            <iframe
-              width='640'
-              height='430'
-              src={videoUrl(details?.videos?.results[0]?.key)}
-            />
-            {showHasVideoAbaliableMessage(details?.videos?.results[0]?.key)}
+            {videoTrailer(details?.videos?.results[0]?.key)}
             <Overview>
               <h1>Overview: </h1>
-              {showOverview(details?.overview)}
+              <OverviewText overview={details?.overview} />
             </Overview>
           </DetailsWrappler>
         </DetailsContainer>
       </DetailsModalWrappler>
     </Modal>
   );
+  
+  
+  function videoTrailer(key) {
+    const defaultKey = "dQw4w9WgXcQ";
+    const youtubeEndpoint = "https://www.youtube.com/embed/";
+  
+    if (key) {
+      return <iframe width='640' height='430' src={youtubeEndpoint + key} />
+    }
+    
+    if (!key) {
+      return (
+        <>
+          <iframe width='640' height='430' src={youtubeEndpoint + defaultKey} />
+          <h3>Sorry, no trailer for this movie was found 😟</h3>;
+        </>
+      );
+    }
+  }
 
+  
   function closeModal() {
     setIsVisible(false);
     setMovieId();
   }
 
-  async function fechMovieData(movieId) {
-    const movieData = await getMovieDetails(movieId);
-    setDetails(movieData);
-  }
 }
 
 function releaseDate(date, format = "en-Us") {
@@ -84,30 +95,9 @@ function releaseDate(date, format = "en-Us") {
   }
 }
 
-function filterOfficilaTrailer(details) {
-  if (details?.videos?.results) {
-    details?.videos?.results.filter(
-      (video) => video.name === "Official Trailer"
-    );
-  }
-}
-function showOverview(overview) {
+function OverviewText({ overview }) {
   if (overview) return <h2>{overview}</h2>;
   if (!overview) return <h2>This movie doesn't have a overview yet.</h2>;
-}
-
-function showHasVideoAbaliableMessage(key) {
-  if (!key) <h3>Sorry there is no video available &#128546;</h3>;
-}
-
-function videoUrl(key) {
-  const defaultKey = "dQw4w9WgXcQ";
-  const youtubeEndpoint = "https://www.youtube.com/embed/";
-
-  if (key) {
-    return String(youtubeEndpoint + key);
-  }
-  return String(youtubeEndpoint + defaultKey);
 }
 
 const DetailsModalWrappler = styled.div`

@@ -60,7 +60,6 @@ export function GoogleButton() {
       } catch (error) {
         if (error.response.status === 409) {
           const { token } = await signIn(email, uid);
-          console.log(token);
           setUserData({
             image: photoURL,
             name: displayName,

@@ -12,29 +12,6 @@ import { GoogleButton } from "./GoogleButton";
 export default function LoginPage({ action }) {
   const { userData, setUserData } = useContext(AuthContext);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       const { uid } = user;
-  //       let { displayName, photoURL } = user;
-
-  //       if (!displayName) {
-  //         displayName = user.email;
-  //       }
-  //       if (!photoURL) {
-  //         photoURL =
-  //           "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png";
-  //       }
-  //       setUserData({
-  //         id: uid,
-  //         image: photoURL,
-  //         name: displayName,
-  //       });
-  //     }
-  //   });
-  // });
-
-  
 
   return (
     <>

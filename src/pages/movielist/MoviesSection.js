@@ -8,6 +8,8 @@ import { MovieBox } from "../../components/MovieBox";
 export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
   const navigate = useNavigate();
   const location = useLocation();
+  let isOneClick = true
+
   return (
     <>
       <MoviesSectionWrappler>
@@ -18,10 +20,8 @@ export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
                 <img
                   draggable={false}
                   src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-                  onClick={() => {
-                    const path = `${location.pathname}?movieId=${data.id}`;
-                    navigate(path);
-                    setMovieId(data.id);
+                  onClick={(event) => {
+                    handleClick(event, data.id);
                   }}
                   ref={inView}
                 />
@@ -33,6 +33,22 @@ export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
       {!hasMorePages && <Footer />}
     </>
   );
+
+  function handleClick(e, movieId) {
+
+    if (e.detail === 2) {
+      isOneClick = false
+     return console.log("filme adicionado a sua watchlist");
+    }
+    setTimeout(() => {
+       if(isOneClick){
+        const path = `${location.pathname}?movieId=${movieId}`;
+        navigate(path);
+        setMovieId(movieId)
+      }
+      isOneClick = true
+    }, [300]);
+  }
 }
 
 const MoviesSectionWrappler = styled.div`
