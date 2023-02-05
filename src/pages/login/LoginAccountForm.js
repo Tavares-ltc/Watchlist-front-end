@@ -63,11 +63,6 @@ export function LoginAccountForm({ children }) {
         userInputData.email,
         userInputData.password
       );
-      toast.success("Welcome!", {
-        closeOnClick: true,
-        pauseOnHover: true,
-        theme: "dark",
-      });
       setUserData({ token, name, image });
       navigate("/");
     } catch (error) {

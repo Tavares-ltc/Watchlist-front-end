@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ImPushpin } from "react-icons/im";
+import useAddWatchlist from "../../hooks/api/useAddWatchlist";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
+import { PosterToastIcon } from "../../components/PosterToastIcon";
 export function MoviePoster({ details }) {
-  let isMouseHovering = false;
+  const { userData } = useContext(AuthContext);
+
   const [isMoreDetailsVisible, setIsMoreDetailsVisible] = useState(false);
   const [isMoreDetailsFixed, setIsMoreDetailsFixed] = useState(false);
+  let isMouseHovering = false;
+
+  const { postWatchlistMovie } = useAddWatchlist();
+  const urlPathName = window.location.pathname.toString();
   let isOneClick = true;
 
   return (
@@ -15,7 +25,7 @@ export function MoviePoster({ details }) {
           onMouseEnter={handleMouse}
           onMouseLeave={handleLeave}
           onClick={(event) => {
-            handleClick(event, details.id);
+            handleClick(event, details);
           }}
         />
         <MoreDetailsContainer
@@ -24,11 +34,14 @@ export function MoviePoster({ details }) {
           <MoreDetails
             isMoreDetailsFixed={isMoreDetailsFixed}
             details={details?.watchProviders?.results}
+            addWatchlist={() => twoClicksFunction(details)}
           />
         </MoreDetailsContainer>
       </ImageContainer>
     </>
   );
+
+
   function handleLeave() {
     isMouseHovering = false;
     setTimeout(() => {
@@ -45,21 +58,68 @@ export function MoviePoster({ details }) {
     }, [400]);
   }
 
-  function handleClick(e, movieId) {
+  function handleClick(e, movie) {
     if (e.detail === 2) {
       isOneClick = false;
-      return console.log("filme adicionado a sua watchlist");
+      return twoClicksFunction(movie);
     }
     setTimeout(() => {
       if (isOneClick) {
-        setIsMoreDetailsFixed(!isMoreDetailsFixed);
+        oneClickFunction();
       }
       isOneClick = true;
     }, [300]);
   }
+
+  function oneClickFunction() {
+    setIsMoreDetailsFixed(!isMoreDetailsFixed);
+  }
+
+  function twoClicksFunction(movie) {
+    if (!userData.name) {
+      return toast.warn(
+        "You need to login before adding this movie to your watchlist.",
+        {
+          theme: "dark",
+        }
+      );
+    }
+    if (urlPathName === "/watchlist") {
+      return alert("You are already on watchlist");
+    }
+    postWatchlistMovie(movie.id)
+      .then(() => {
+        return toast("", {
+          icon: (
+            <PosterToastIcon
+              movieTitle={movie.title}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            />
+          ),
+          theme: "dark",
+        });
+      })
+      .catch((error) => {
+        if (error.response.status == 409) {
+          return toast.info("This movie is already on watchlist", {
+            theme: "dark",
+          });
+        }
+        if (error.response.status == 401) {
+          logout();
+          return toast.error("Try to re-login", {
+            theme: "dark",
+          });
+        }
+      });
+  }
+  function logout() {
+    localStorage.removeItem("userData");
+    window.location.reload();
+  }
 }
 
-function MoreDetails({ isMoreDetailsFixed, details }) {
+function MoreDetails({ isMoreDetailsFixed, details, addWatchlist }) {
   if (details) {
     return (
       <MoreDetailsWrappler>
@@ -72,7 +132,7 @@ function MoreDetails({ isMoreDetailsFixed, details }) {
           {details && (
             <h3 onClick={() => window.open(details.US?.link)}>Know more...</h3>
           )}
-          <h3>Add to Watchlist +</h3>
+          <h3 onClick={addWatchlist}>Add to Watchlist +</h3>
         </NavBar>
       </MoreDetailsWrappler>
     );
@@ -83,11 +143,14 @@ function Providers({ providers }) {
   if (providers) {
     return (
       <ProvidersContainer>
-        {providers.map((provider, index) => (
-          index < 6 && <img
-            src={"https://image.tmdb.org/t/p/w500" + provider.logo_path}
-          ></img>
-        ))}
+        {providers.map(
+          (provider, index) =>
+            index < 6 && (
+              <img
+                src={"https://image.tmdb.org/t/p/w500" + provider.logo_path}
+              ></img>
+            )
+        )}
       </ProvidersContainer>
     );
   }

@@ -1,11 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap");
 
 * {
   box-sizing: border-box;
-  transition: all ease .2s;
+  transition: all ease 0.2s;
 }
 
 body {
   font-family: "Lexend Deca", sans-serif;
   overflow-x: hidden;
+  }
+.Toastify__toast.Toastify__toast--default {
+  max-height: 130px;
 }
+.Toastify__toast--default .Toastify__toast-body {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 200px;
+  gap: 20px;
+}
+
+.Toastify__toast-container {
+margin-top: 50px;
+margin-right: 10%;
+--toastify-color-progress-dark: linear-gradient(
+  to right,
+  #de0f62,
+  #de0f62,
+  #dc3a34,
+  #f16305
+);
+}
+

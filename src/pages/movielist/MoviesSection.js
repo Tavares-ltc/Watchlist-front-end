@@ -2,14 +2,23 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Footer } from "../../components/Footer";
-import { Modal } from "../../components/Modal";
 import { MovieBox } from "../../components/MovieBox";
+import useAddWatchlist from "../../hooks/api/useAddWatchlist";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
+import { PosterToastIcon } from "../../components/PosterToastIcon";
+
 
 export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
   const navigate = useNavigate();
   const location = useLocation();
-  let isOneClick = true
 
+  const { userData } = useContext(AuthContext);
+  const { postWatchlistMovie } = useAddWatchlist();
+  const urlPathName = window.location.pathname.toString();
+  const pageName = urlPathName.split("/")[1];
+  let isOneClick = true;
   return (
     <>
       <MoviesSectionWrappler>
@@ -21,8 +30,9 @@ export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
                   draggable={false}
                   src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
                   onClick={(event) => {
-                    handleClick(event, data.id);
+                    handleClick(event, data);
                   }}
+                  key={index}
                   ref={inView}
                 />
               </MovieBox>
@@ -30,24 +40,68 @@ export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
           ))}
         </MoviesWrappler>
       </MoviesSectionWrappler>
-      {!hasMorePages && <Footer />}
+      {!hasMorePages && <Footer page={pageName} moviesNumber={movies.length} />}
     </>
   );
 
-  function handleClick(e, movieId) {
-
+  function handleClick(e, movie) {
     if (e.detail === 2) {
-      isOneClick = false
-     return console.log("filme adicionado a sua watchlist");
+      isOneClick = false;
+      return twoClicksFunction(movie);
     }
     setTimeout(() => {
-       if(isOneClick){
-        const path = `${location.pathname}?movieId=${movieId}`;
-        navigate(path);
-        setMovieId(movieId)
+      if (isOneClick) {
+        oneClickFunction(movie);
       }
-      isOneClick = true
+      isOneClick = true;
     }, [300]);
+  }
+
+  function oneClickFunction(movie) {
+    const path = `${location.pathname}?movieId=${movie.id}`;
+    navigate(path);
+    setMovieId(movie.id);
+  }
+
+  function twoClicksFunction(movie) {
+    if (!userData.name) {
+      return toast.warn(
+        "You need to login before adding this movie to your watchlist.",
+        {
+          theme: "dark",
+        }
+      );
+    }
+
+    postWatchlistMovie(movie.id)
+      .then(() => {
+        return toast("", {
+          icon: (
+            <PosterToastIcon
+              movieTitle={movie.title}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            />
+          ),
+          theme: "dark",
+        });
+      })
+      .catch((error) => {
+        if (error.response.status == 409) {
+          return toast.info("This movie is already on watchlist", {
+            theme: "dark",
+          });
+        }
+        if (error.response.status == 401) {
+          logout();
+          return toast.error("Try to re-login", {
+            theme: "dark",
+          });
+        }
+      });
+  }
+  function logout() {
+    localStorage.removeItem("userData");
+    window.location.reload();
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 import styled from "styled-components";
 import { Modal } from "../../components/Modal";
@@ -10,18 +11,19 @@ export function MovieDetails({ movieId, setMovieId }) {
   const [details, setDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate()
   useEffect(() => {
     async function fechMovieData(movieId) {
       const movieData = await getMovieDetails(movieId);
-     return setDetails(movieData);
+      return setDetails(movieData);
     }
     if (movieId) {
-      fechMovieData(movieId)
+      fechMovieData(movieId);
       setLoading(true);
       setIsVisible(true);
       setTimeout(() => {
         setLoading(false);
-      }, [1000]);
+      }, [1200]);
     }
   }, [movieId]);
 
@@ -58,16 +60,15 @@ export function MovieDetails({ movieId, setMovieId }) {
       </DetailsModalWrappler>
     </Modal>
   );
-  
-  
+
   function videoTrailer(key) {
     const defaultKey = "dQw4w9WgXcQ";
     const youtubeEndpoint = "https://www.youtube.com/embed/";
-  
+
     if (key) {
-      return <iframe width='640' height='430' src={youtubeEndpoint + key} />
+      return <iframe width='640' height='430' src={youtubeEndpoint + key} />;
     }
-    
+
     if (!key) {
       return (
         <>
@@ -78,12 +79,14 @@ export function MovieDetails({ movieId, setMovieId }) {
     }
   }
 
-  
   function closeModal() {
     setIsVisible(false);
     setMovieId();
+    setDetails();
+    const url = window.location.toString();
+    const urlWithoutQuery = url.split("?")[0];
+    window.history.replaceState("","", urlWithoutQuery)
   }
-
 }
 
 function releaseDate(date, format = "en-Us") {

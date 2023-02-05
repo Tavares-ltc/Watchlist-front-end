@@ -10,6 +10,8 @@ import { Modal } from "./Modal";
 export default function Header({ setSearchQuery, setIsAccountModalVisible }) {
   const navigate = useNavigate();
   const { userData } = useContext(AuthContext);
+
+  
   return (
     <>
       <HeaderWrappler>
@@ -67,8 +69,19 @@ export default function Header({ setSearchQuery, setIsAccountModalVisible }) {
           </IconWrappler>
         </SearchBar>
         <ConfigBar>
-          <h2>en-US</h2>
-          <LoginButton userData={userData} navigate={navigate} setIsAccountModalVisible={setIsAccountModalVisible} />
+          <RegionWrappler>
+            <img
+              src={
+                "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/255px-Flag_of_the_United_States.svg.png"
+              }
+            />
+            <h2>en-US</h2>
+          </RegionWrappler>
+          <LoginButton
+            userData={userData}
+            navigate={navigate}
+            setIsAccountModalVisible={setIsAccountModalVisible}
+          />
         </ConfigBar>
       </HeaderWrappler>
     </>
@@ -94,9 +107,9 @@ function LoginButton({ userData, navigate, setIsAccountModalVisible }) {
   if (userData.name) {
     return (
       <>
-          <UserDataWrappler onClick={()=> setIsAccountModalVisible(true)}>
-            <img src={userData.image} />
-          </UserDataWrappler>
+        <UserDataWrappler onClick={() => setIsAccountModalVisible(true)}>
+          <img src={userData.image} />
+        </UserDataWrappler>
       </>
     );
   } else {
@@ -162,7 +175,9 @@ const SearchBar = styled.div`
 const ConfigBar = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-left: 30px;
+  justify-content: space-between;
+  width:180px ;
   h2 {
     color: white;
     margin-right: 15px;
@@ -191,17 +206,20 @@ const UserDataWrappler = styled.div`
     height: 45px;
     border-radius: 30px;
     outline: 2px solid #de0f62;
+    cursor: pointer;
   }
 `;
-const AccountMenuContainer = styled.div`
-  background-color: red;
-  height: 60px;
-`;
-const AccountMenu = styled.div`
-  background-color: blue;
-  width: 400px;
+const RegionWrappler = styled.div`
+width: 150px;
   display: flex;
-  height: 100px;
-  max-width: 100px;
-  padding-top: 80px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    margin: 10px;
+  }
+  img {
+    width: 25px;
+    height: 15px;
+  }
 `;

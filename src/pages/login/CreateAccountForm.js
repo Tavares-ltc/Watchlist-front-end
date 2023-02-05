@@ -5,10 +5,12 @@ import { useValidateImage } from "../../hooks/useValidateImage";
 import { AvatarImagesSelector } from "./AvatarImagesSelector";
 import useSignUp from "../../hooks/api/useSignUp";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export function CreateAccountForm() {
   const [userImage, setUserImage] = useState("");
   const { signUp } = useSignUp();
   const validateImage = useValidateImage;
+  const navigate = useNavigate()
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -131,6 +133,7 @@ export function CreateAccountForm() {
           pauseOnHover: true,
           theme: "dark",
           })
+          navigate("/login")
       })
       .catch(()=>{
         toast.error("Something went wrong, please try again later.", {

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../../services/firebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import useSignUp from "../../hooks/api/useSignUp";
@@ -28,7 +28,10 @@ export function GoogleButton() {
   );
 
   async function login() {
+    console.log("1")
+
     const result = await signInWithPopup(auth, provider);
+    console.log(result)
     if (result.user) {
       const { uid } = result.user;
       let { displayName, photoURL, email } = result.user;
@@ -40,25 +43,24 @@ export function GoogleButton() {
         photoURL =
           "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png";
       }
+      console.log("2")
 
       try {
-        await signUp(displayName, email, uid, photoURL);
-        const { token } = signIn(email, uid);
+        signUp(displayName, email, uid, photoURL);
+        
+        
+        const { token } = await signIn(email, uid);
 
         setUserData({
           image: photoURL,
           name: displayName,
           token,
         });
+        console.log("5")
 
-        toast.success("Welcome!", {
-          closeOnClick: true,
-          pauseOnHover: true,
-          theme: "dark",
-        });
         navigate("/")
       } catch (error) {
-        if (error.response.status === 409) {
+        if (error?.response?.status === 409) {
           const { token } = await signIn(email, uid);
           setUserData({
             image: photoURL,

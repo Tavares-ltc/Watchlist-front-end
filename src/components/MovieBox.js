@@ -3,8 +3,6 @@ import { generatePath, Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export function MovieBox({ children, genres, movieId }) {
-  const navigate = useNavigate();
-  const location = useLocation();
   return (
     <>
       <MovieBoxWrappler>

@@ -4,15 +4,17 @@ import MovielistPage from "./pages/movielist/Index.js";
 import LoginPage from "./pages/login/Index.js";
 import AuthContextProvider from "./contexts/AuthContext.js";
 import { ToastContainer } from "react-toastify";
+import WatchlistPage from "./pages/watchlist/index.js";
+import { HomePage } from "./pages/HomePage.js";
 
 function App() {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer  />
       <AuthContextProvider>
         <Router>
           <Routes>
-            <Route path='/' element={<MovielistPage />} />
+            <Route path='/' element={<HomePage />} />
             <Route
               path='/popular'
               element={<MovielistPage moviesCategory={"popular"} />}
@@ -39,6 +41,8 @@ function App() {
             />
             <Route path='/login' element={<LoginPage action='login' />} />
             <Route path='/signup' element={<LoginPage action='signup' />} />
+            <Route path='/watchlist/' element={<WatchlistPage/>} />
+            <Route path='/watchlist/:userId' element={<WatchlistPage/>} />
           </Routes>
         </Router>
       </AuthContextProvider>

@@ -25,7 +25,7 @@ export function AccountMenuModal({
         <AccountMenu>
 
         <h1>{userData.name}</h1>
-        <h2 onClick={()=> alert("Coming soon")}>Watchlist</h2>
+        <h2 onClick={()=> navigate("/watchlist")}>Watchlist</h2>
         <h2 onClick={logout}>Logout</h2>
         </AccountMenu>
       </Modal>
