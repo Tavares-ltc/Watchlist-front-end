@@ -8,10 +8,10 @@ import useSignIn from "../../hooks/api/useSignIn";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 export function GoogleButton() {
-  const { userData, setUserData } = useContext(AuthContext);
+  const { setUserData } = useContext(AuthContext);
   const { signUp } = useSignUp();
   const { signIn } = useSignIn();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       <ButtonWrappler onClick={login}>
@@ -28,10 +28,7 @@ export function GoogleButton() {
   );
 
   async function login() {
-    console.log("1")
-
     const result = await signInWithPopup(auth, provider);
-    console.log(result)
     if (result.user) {
       const { uid } = result.user;
       let { displayName, photoURL, email } = result.user;
@@ -43,12 +40,10 @@ export function GoogleButton() {
         photoURL =
           "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png";
       }
-      console.log("2")
 
       try {
         signUp(displayName, email, uid, photoURL);
-        
-        
+
         const { token } = await signIn(email, uid);
 
         setUserData({
@@ -56,9 +51,8 @@ export function GoogleButton() {
           name: displayName,
           token,
         });
-        console.log("5")
 
-        navigate("/")
+        navigate("/");
       } catch (error) {
         if (error?.response?.status === 409) {
           const { token } = await signIn(email, uid);
@@ -72,7 +66,7 @@ export function GoogleButton() {
             pauseOnHover: true,
             theme: "dark",
           });
-          navigate("/")
+          navigate("/");
         } else {
           toast.error("Something went wrong, please try again later.", {
             closeOnClick: true,

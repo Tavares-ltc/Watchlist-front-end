@@ -27,13 +27,12 @@ export default function MovielistPage({ moviesCategory }) {
   const [movieId, setMovieId] = useState(query.get("movieId"));
   const [searchQuery, setSearchQuery] = useState(query.get("term"));
 
-
   useEffect(() => {
     fechData(moviesCategoryType);
   }, [inView]);
 
   if (movies.length === 0) {
-    return <PageLoading/>
+    return <PageLoading />;
   }
   return (
     <>
@@ -69,4 +68,3 @@ export default function MovielistPage({ moviesCategory }) {
     setCurrentPage(currentPage + 1);
   }
 }
-

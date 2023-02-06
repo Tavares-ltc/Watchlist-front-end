@@ -1,13 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-export function Footer({page, moviesNumber}) {
-  if(page === "watchlist"){
+export function Footer({ page, moviesNumber }) {
+  if (page === "watchlist") {
     return (
       <FooterWrappler>
-        {moviesNumber < 12&&<h2>Add more movies to your watchlist, after you add twelve movies this will be your main page. 😎</h2>}
+        {moviesNumber < 12 && (
+          <h2>
+            Add more movies to your watchlist, after you add twelve movies this
+            will be your main page. 😎
+          </h2>
+        )}
         <h1>Developed by:</h1>
-        <h2 > <a href={"https://github.com/Tavares-ltc"}>https://github.com/Tavares-ltc</a></h2>
+        <h2>
+          {" "}
+          <a href={"https://github.com/Tavares-ltc"}>
+            https://github.com/Tavares-ltc
+          </a>
+        </h2>
       </FooterWrappler>
     );
   }
@@ -16,7 +26,12 @@ export function Footer({page, moviesNumber}) {
       <h2>It looks like you've reached the end of that tab 😨</h2>
       <h2>But you can look for more movies in the others tabs 😎</h2>
       <h1>Developed by:</h1>
-      <h2 > <a href={"https://github.com/Tavares-ltc"}>https://github.com/Tavares-ltc</a></h2>
+      <h2>
+        {" "}
+        <a href={"https://github.com/Tavares-ltc"}>
+          https://github.com/Tavares-ltc
+        </a>
+      </h2>
     </FooterWrappler>
   );
 }

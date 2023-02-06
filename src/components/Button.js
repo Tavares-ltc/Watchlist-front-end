@@ -22,7 +22,7 @@ const ButtonWrappler = styled.div`
   align-items: center;
   cursor: pointer;
   button {
-    all:unset;
+    all: unset;
     width: 100%;
     height: 100%;
     display: flex;

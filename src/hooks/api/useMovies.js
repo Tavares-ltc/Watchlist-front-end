@@ -7,7 +7,9 @@ export default function useMovies() {
     loading: moviesLoading,
     error: moviesError,
     act: getMovies,
-  } = useAsync((category,language, page) => moviesApi.getMovies(category, language, page));
+  } = useAsync((category, language, page) =>
+    moviesApi.getMovies(category, language, page)
+  );
 
   return {
     moviesLoading,

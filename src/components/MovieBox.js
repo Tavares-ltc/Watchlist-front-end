@@ -1,5 +1,4 @@
 import React from "react";
-import { generatePath, Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export function MovieBox({ children, genres, movieId }) {
@@ -18,6 +17,8 @@ export function MovieBox({ children, genres, movieId }) {
 
 const MovieBoxWrappler = styled.div`
   width: 240px;
+  position: relative;
+
   img {
     width: 90%;
     height: 297px;

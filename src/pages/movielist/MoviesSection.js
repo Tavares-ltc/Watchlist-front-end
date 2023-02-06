@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { PosterToastIcon } from "../../components/PosterToastIcon";
-
+import { GiRoundStar } from "react-icons/gi";
 
 export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
   const navigate = useNavigate();
@@ -35,6 +35,11 @@ export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
                   key={index}
                   ref={inView}
                 />
+                <StarContainer>
+                  {data?.rating?.stars && (
+                    <GiRoundStar color={"yellow"} size={"20px"} />
+                  )}
+                </StarContainer>
               </MovieBox>
             </>
           ))}
@@ -86,12 +91,12 @@ export function MoviesSection({ movies, inView, hasMorePages, setMovieId }) {
         });
       })
       .catch((error) => {
-        if (error.response.status == 409) {
+        if (error.response.status === 409) {
           return toast.info("This movie is already on watchlist", {
             theme: "dark",
           });
         }
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           logout();
           return toast.error("Try to re-login", {
             theme: "dark",
@@ -118,4 +123,11 @@ const MoviesWrappler = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, auto));
   gap: 40px;
+`;
+
+const StarContainer = styled.div`
+  position: absolute;
+  margin: 5px 30px;
+  top: 0;
+  right: 0;
 `;

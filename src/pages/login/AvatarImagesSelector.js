@@ -17,17 +17,18 @@ export function AvatarImagesSelector({ children, userImage, setUserImage }) {
       <ImagesContainer>
         {avatarImages.map((imgSrc, index) => (
           <ImageStyle key={index} isSelected={imgSrc === userImage}>
-            <img onClick={()=> {setUserImage(imgSrc)}} src={imgSrc}></img>
+            <img
+              onClick={() => {
+                setUserImage(imgSrc);
+              }}
+              src={imgSrc}
+            ></img>
           </ImageStyle>
         ))}
       </ImagesContainer>
     </AvatarWrappler>
   );
-
-
 }
-
-
 
 const AvatarWrappler = styled.div`
   height: 120px;
@@ -45,7 +46,8 @@ const ImagesContainer = styled.div`
 
 const ImageStyle = styled.div`
   img {
-    outline: ${props => props.isSelected? "3px solid #de0f62" : "3px solid #c0c0c0"};
+    outline: ${(props) =>
+      props.isSelected ? "3px solid #de0f62" : "3px solid #c0c0c0"};
     width: 55px;
     height: 55px;
     border-radius: 40px;

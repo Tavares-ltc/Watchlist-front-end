@@ -4,13 +4,11 @@ import { Background } from "../../components/Background";
 import { Modal } from "../../components/Modal";
 import { WatchlistLogo } from "../../components/WatchlistLogo";
 
-import { AuthContext } from "../../contexts/AuthContext";
 import { CreateAccountForm } from "./CreateAccountForm";
 import { useNavigate } from "react-router-dom";
 import { LoginAccountForm } from "./LoginAccountForm";
 import { GoogleButton } from "./GoogleButton";
 export default function LoginPage({ action }) {
-  const { userData, setUserData } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -30,9 +28,7 @@ export default function LoginPage({ action }) {
               <b>Watchlist!</b>
             </h2>
             <FormType type={action} navigate={navigate} />
-            
           </FormWrappler>
-         
         </Modal>
       </Background>
     </>
@@ -54,7 +50,7 @@ function FormType({ type, navigate }) {
     return (
       <>
         <LoginAccountForm />
-        <GoogleButton/>
+        <GoogleButton />
         <h3 onClick={() => navigate("/signup")}>
           Do not have an account yet? Try login through google or click here.
         </h3>
@@ -70,7 +66,7 @@ const FormWrappler = styled.div`
   display: flex;
   flex-direction: column;
   h2 {
-      margin-bottom: 50px;
+    margin-bottom: 50px;
     color: white;
     b:first-of-type {
       color: #de0f62;

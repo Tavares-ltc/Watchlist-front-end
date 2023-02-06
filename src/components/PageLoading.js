@@ -26,4 +26,3 @@ const LoadingContainer = styled.div`
   align-items: center;
   z-index: 10;
 `;
-

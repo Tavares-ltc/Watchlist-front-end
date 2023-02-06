@@ -10,7 +10,7 @@ export function CreateAccountForm() {
   const [userImage, setUserImage] = useState("");
   const { signUp } = useSignUp();
   const validateImage = useValidateImage;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -125,25 +125,29 @@ export function CreateAccountForm() {
     );
     const hasError = errorsMessages.length > 0 ? true : false;
     if (!hasError) {
-      const promise = signUp(userData.name, userData.email, userData.password, userData.image);
+      const promise = signUp(
+        userData.name,
+        userData.email,
+        userData.password,
+        userData.image
+      );
       promise
-      .then(()=> {
-        toast.success("Your account was created!", {
-          closeOnClick: true,
-          pauseOnHover: true,
-          theme: "dark",
-          })
-          navigate("/login")
-      })
-      .catch(()=>{
-        toast.error("Something went wrong, please try again later.", {
-          closeOnClick: true,
-          pauseOnHover: true,
-          theme: "dark",
-          })
-      })
+        .then(() => {
+          toast.success("Your account was created!", {
+            closeOnClick: true,
+            pauseOnHover: true,
+            theme: "dark",
+          });
+          navigate("/login");
+        })
+        .catch(() => {
+          toast.error("Something went wrong, please try again later.", {
+            closeOnClick: true,
+            pauseOnHover: true,
+            theme: "dark",
+          });
+        });
     }
-    
   }
 
   function verifyData(data) {

@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { UserSection } from "./UserSection";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
+
 export default function WatchlistPage() {
   const { getWatchlistMovies } = useWatchlistMovies();
   const [movies, setMovies] = useState([]);
@@ -25,13 +26,13 @@ export default function WatchlistPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!userData.name){
+    if (!userData.name) {
       toast.error("You need an account to access this page.", {
-        theme: "dark"
-      })
-      return navigate("/popular")
+        theme: "dark",
+      });
+      return navigate("/popular");
     }
-      fetchMovies();
+    fetchMovies();
   }, []);
 
   if (movies.length === 0) {

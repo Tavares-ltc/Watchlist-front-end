@@ -5,13 +5,11 @@ import { BsSearch } from "react-icons/bs";
 import { WatchlistLogo } from "./WatchlistLogo";
 import { Button } from "./Button";
 import { AuthContext } from "../contexts/AuthContext";
-import { Modal } from "./Modal";
 
-export default function Header({ setSearchQuery, setIsAccountModalVisible }) {
+export default function Header({ setIsAccountModalVisible }) {
   const navigate = useNavigate();
   const { userData } = useContext(AuthContext);
 
-  
   return (
     <>
       <HeaderWrappler>
@@ -177,7 +175,7 @@ const ConfigBar = styled.div`
   align-items: center;
   margin-left: 30px;
   justify-content: space-between;
-  width:180px ;
+  width: 180px;
   h2 {
     color: white;
     margin-right: 15px;
@@ -210,13 +208,14 @@ const UserDataWrappler = styled.div`
   }
 `;
 const RegionWrappler = styled.div`
-width: 150px;
+  width: 150px;
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
   h2 {
     margin: 10px;
+    cursor: unset;
   }
   img {
     width: 25px;

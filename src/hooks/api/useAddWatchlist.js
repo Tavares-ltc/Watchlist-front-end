@@ -3,8 +3,8 @@ import useToken from "../useToken";
 import watchlistApi from "../../services/watchlistApi";
 
 export default function useAddWatchlist() {
-    const token = useToken();
-    
+  const token = useToken();
+
   const {
     loading: insertionLoading,
     error: inserionError,

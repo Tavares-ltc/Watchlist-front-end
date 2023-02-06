@@ -10,7 +10,7 @@ export function AccountMenuModal({
   setIsAccountModalVisible,
 }) {
   const { userData } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       <Modal
@@ -23,31 +23,28 @@ export function AccountMenuModal({
         closeFunction={() => setIsAccountModalVisible(false)}
       >
         <AccountMenu>
-
-        <h1>{userData.name}</h1>
-        <h2 onClick={()=> navigate("/watchlist")}>Watchlist</h2>
-        <h2 onClick={logout}>Logout</h2>
+          <h1>{userData.name}</h1>
+          <h2 onClick={() => navigate("/watchlist")}>Watchlist</h2>
+          <h2 onClick={logout}>Logout</h2>
         </AccountMenu>
       </Modal>
     </>
   );
 
-function logout(){
-    localStorage.removeItem("userData")
-    signOut(auth, provider)
-    window.location.reload()
-}
-
-
+  function logout() {
+    localStorage.removeItem("userData");
+    signOut(auth, provider);
+    window.location.reload();
+  }
 }
 
 const AccountMenu = styled.div`
-h1{
+  h1 {
     font-size: 26px;
     color: #fe6828;
     margin-bottom: 40px;
-}
-h2 {
+  }
+  h2 {
     font-size: 18px;
     color: white;
     margin-bottom: 40px;
@@ -55,5 +52,5 @@ h2 {
     &:hover {
       color: #de0f62;
     }
-}
-`
+  }
+`;

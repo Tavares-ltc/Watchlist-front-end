@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { PosterToastIcon } from "../../components/PosterToastIcon";
+import useRemoveWatchlistMovie from "../../hooks/api/useRemoveFromWatchlist";
 export function MoviePoster({ details }) {
   const { userData } = useContext(AuthContext);
 
@@ -14,9 +15,9 @@ export function MoviePoster({ details }) {
   let isMouseHovering = false;
 
   const { postWatchlistMovie } = useAddWatchlist();
+  const { removeWatchlistMovie } = useRemoveWatchlistMovie();
   const urlPathName = window.location.pathname.toString();
   let isOneClick = true;
-
   return (
     <>
       <ImageContainer>
@@ -33,14 +34,20 @@ export function MoviePoster({ details }) {
         >
           <MoreDetails
             isMoreDetailsFixed={isMoreDetailsFixed}
+            setIsMoreDetailsFixed={setIsMoreDetailsFixed}
             details={details?.watchProviders?.results}
+            watchlistId={details?.watchlist_id}
             addWatchlist={() => twoClicksFunction(details)}
+            removeFromWatchlist={() => {
+              removeWatchlistMovie(details.id).then(() => {
+                window.location.reload();
+              });
+            }}
           />
         </MoreDetailsContainer>
       </ImageContainer>
     </>
   );
-
 
   function handleLeave() {
     isMouseHovering = false;
@@ -119,11 +126,18 @@ export function MoviePoster({ details }) {
   }
 }
 
-function MoreDetails({ isMoreDetailsFixed, details, addWatchlist }) {
+function MoreDetails({
+  isMoreDetailsFixed,
+  setIsMoreDetailsFixed,
+  details,
+  addWatchlist,
+  removeFromWatchlist,
+  watchlistId,
+}) {
   if (details) {
     return (
       <MoreDetailsWrappler>
-        <FixedIcon>
+        <FixedIcon onClick={() => setIsMoreDetailsFixed(!isMoreDetailsFixed)}>
           <ImPushpin color={isMoreDetailsFixed ? "#de0f62" : "white"} />
         </FixedIcon>
         <h1>Watch providers:</h1>
@@ -132,7 +146,11 @@ function MoreDetails({ isMoreDetailsFixed, details, addWatchlist }) {
           {details && (
             <h3 onClick={() => window.open(details.US?.link)}>Know more...</h3>
           )}
-          <h3 onClick={addWatchlist}>Add to Watchlist +</h3>
+          {watchlistId ? (
+            <h3 onClick={removeFromWatchlist}>Remove from watchlist -</h3>
+          ) : (
+            <h3 onClick={addWatchlist}>Add to Watchlist +</h3>
+          )}
         </NavBar>
       </MoreDetailsWrappler>
     );
@@ -175,6 +193,9 @@ const MoreDetailsContainer = styled.div`
 const ImageContainer = styled.div`
   position: relative;
   width: 385px;
+  img {
+    cursor: pointer;
+  }
 `;
 const MoreDetailsWrappler = styled.div`
   overflow: hidden;
@@ -226,4 +247,5 @@ const FixedIcon = styled.div`
   right: 0;
   margin-right: 10px;
   margin-top: 10px;
+  cursor: pointer;
 `;

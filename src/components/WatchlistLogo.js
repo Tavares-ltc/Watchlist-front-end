@@ -2,15 +2,22 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export function WatchlistLogo({size}) {
-  const navigate = useNavigate()
+export function WatchlistLogo({ size }) {
+  const navigate = useNavigate();
 
   const urlPathName = window.location.pathname.toString();
-  const pageName = urlPathName.split("/")[1]
+  const pageName = urlPathName.split("/")[1];
 
   return (
     <>
-      <LogoWrappler size={size} onClick={()=> pageName === "watchlist"? navigate("/discover") : navigate("/watchlist")}>
+      <LogoWrappler
+        size={size}
+        onClick={() =>
+          pageName === "watchlist"
+            ? navigate("/discover")
+            : navigate("/watchlist")
+        }
+      >
         <h6>Watchlist</h6>
       </LogoWrappler>
     </>

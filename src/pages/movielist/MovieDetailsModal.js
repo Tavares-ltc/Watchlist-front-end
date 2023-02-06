@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 import styled from "styled-components";
 import { Modal } from "../../components/Modal";
+import { StarsRating } from "../../components/StarsRating";
 import useMovieDetails from "../../hooks/api/useMovieDetails";
 import { MoviePoster } from "./MoviePoster";
 
@@ -11,7 +12,7 @@ export function MovieDetails({ movieId, setMovieId }) {
   const [details, setDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     async function fechMovieData(movieId) {
       const movieData = await getMovieDetails(movieId);
@@ -48,6 +49,12 @@ export function MovieDetails({ movieId, setMovieId }) {
               <h1>Release date:</h1>
               <h2>({releaseDate(details?.release_date)})</h2>
             </TextContainer>
+            {details?.watchlist_id && (
+              <StarsRating
+                ratingData={details.rating}
+                watchlistId={details.watchlist_id}
+              />
+            )}
           </Container>
           <DetailsWrappler>
             {videoTrailer(details?.videos?.results[0]?.key)}
@@ -85,7 +92,7 @@ export function MovieDetails({ movieId, setMovieId }) {
     setDetails();
     const url = window.location.toString();
     const urlWithoutQuery = url.split("?")[0];
-    window.history.replaceState("","", urlWithoutQuery)
+    window.history.replaceState("", "", urlWithoutQuery);
   }
 }
 
