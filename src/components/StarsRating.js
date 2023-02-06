@@ -18,7 +18,7 @@ export function StarsRating({ ratingData, watchlistId }) {
   return (
     <>
       <RatingContainer>
-        {rating === 0 && <h3>Saw this movie? Rate it:</h3>}
+        {rating === 0 && <h3>Watched this movie? Rate it:</h3>}
         <Stars
           rating={rating}
           setRating={setRating}

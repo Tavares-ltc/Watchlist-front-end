@@ -12,7 +12,6 @@ export function MovieDetails({ movieId, setMovieId }) {
   const [details, setDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate();
   useEffect(() => {
     async function fechMovieData(movieId) {
       const movieData = await getMovieDetails(movieId);
