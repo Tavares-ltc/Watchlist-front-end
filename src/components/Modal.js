@@ -59,6 +59,7 @@ const ModalWrappler = styled.div`
     overflow-y: scroll;
   }
  
+ max-height: fit-content;
 `;
 
 const CloseButton = styled.div`
