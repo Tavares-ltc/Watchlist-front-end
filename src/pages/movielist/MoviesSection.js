@@ -123,6 +123,18 @@ const MoviesWrappler = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, auto));
   gap: 40px;
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, minmax(140px, auto));
+    gap: 60px;
+  }
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, minmax(140px, auto));
+    gap: 30px;
+  }
+  @media screen and (max-width: 410px) {
+    grid-template-columns: repeat(auto-fit, minmax(125px, auto));
+    gap: 10px;
+  }
 `;
 
 const StarContainer = styled.div`

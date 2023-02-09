@@ -42,7 +42,8 @@ const RatingContainer = styled.div`
   display: flex;
   min-height: 34px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  margin-top: 10px;
   h1 {
     color: white;
     font-size: 15px;
@@ -55,5 +56,8 @@ const RatingContainer = styled.div`
   }
   svg {
     cursor: pointer;
+  }
+  @media screen and (max-width: 1500px) {
+    display: block;
   }
 `;

@@ -203,4 +203,7 @@ export const InputWrappler = styled.div`
   &:nth-child(5) {
     height: 180px;
   }
+  @media screen and (max-width: 750px) {
+    min-height: 70px;
+  }
 `;

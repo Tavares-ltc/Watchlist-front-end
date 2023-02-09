@@ -5,57 +5,19 @@ import { BsSearch } from "react-icons/bs";
 import { WatchlistLogo } from "./WatchlistLogo";
 import { Button } from "./Button";
 import { AuthContext } from "../contexts/AuthContext";
+import { CategoriesNavBar } from "./CategoriesNavBar";
+import useWidth from "../hooks/useWidth";
 
 export default function Header({ setIsAccountModalVisible }) {
   const navigate = useNavigate();
   const { userData } = useContext(AuthContext);
+  const [width] = useWidth();
 
   return (
     <>
       <HeaderWrappler>
         <WatchlistLogo />
-        <NavBar>
-          <h2
-            onClick={() => {
-              navigate("/discover");
-              window.location.reload();
-            }}
-          >
-            Discover
-          </h2>
-          <h2
-            onClick={() => {
-              navigate("/popular");
-              window.location.reload();
-            }}
-          >
-            Popular
-          </h2>
-          <h2
-            onClick={() => {
-              navigate("/now_playing");
-              window.location.reload();
-            }}
-          >
-            Now Playing
-          </h2>
-          <h2
-            onClick={() => {
-              navigate("/upcoming");
-              window.location.reload();
-            }}
-          >
-            Upcoming
-          </h2>
-          <h2
-            onClick={() => {
-              navigate("/top_rated");
-              window.location.reload();
-            }}
-          >
-            Top Rated
-          </h2>
-        </NavBar>
+        <CategoriesNavBar />
         <SearchBar>
           <input
             placeholder='Search...'
@@ -73,7 +35,7 @@ export default function Header({ setIsAccountModalVisible }) {
                 "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/255px-Flag_of_the_United_States.svg.png"
               }
             />
-            <h2>en-US</h2>
+            {width > 780 && <h2>en-US</h2>}
           </RegionWrappler>
           <LoginButton
             userData={userData}
@@ -112,12 +74,14 @@ function LoginButton({ userData, navigate, setIsAccountModalVisible }) {
     );
   } else {
     return (
-      <Button
-        text={"LOGIN"}
-        onClick={() => {
-          navigate("/login");
-        }}
-      />
+      <UserDataWrappler>
+        <Button
+          text={"LOGIN"}
+          onClick={() => {
+            navigate("/login");
+          }}
+        />
+      </UserDataWrappler>
     );
   }
 }
@@ -129,11 +93,9 @@ const HeaderWrappler = styled.div`
   left: 0;
   top: 0;
   box-sizing: border-box;
-
-  padding: 2px 10%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   background-color: #171c25;
   z-index: 1;
   filter: drop-shadow(30px 10px 20px #0c0a016d);
@@ -141,39 +103,63 @@ const HeaderWrappler = styled.div`
   h2 {
     font-size: 16px;
   }
-`;
-
-const NavBar = styled.div`
-  display: flex;
-  margin: 0 30px;
-  h2 {
-    color: white;
-    margin-right: 15px;
-    cursor: pointer;
-    &:hover {
-      color: #de0f62;
-    }
+  @media screen and (max-width: 750px) {
+    padding-left: 50px;
   }
 `;
+
 const SearchBar = styled.div`
   position: relative;
+  min-width: 88px;
   input {
     all: unset;
     background-color: white;
     padding: 6px 30px 6px 20px;
     height: 40px;
-    width: 290px;
+    max-width: 290px;
     font-size: 18px;
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
     border-radius: 8px;
     outline: none;
     box-sizing: border-box;
   }
+  @media screen and (max-width: 750px) {
+    input {
+      width: 95%;
+      height: 30px;
+      font-size: 14px;
+      padding: 4px;
+    }
+  }
+  @media screen and (max-width: 438px) {
+    min-width: 70px;
+    input {
+      font-size: 10px;
+      &::placeholder{
+        
+      }
+    }
+  }
 `;
+
+const IconWrappler = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 12px;
+  margin-right: 8px;
+  pointer-events: none;
+  cursor: unset;
+  @media screen and (max-width: 750px) {
+    margin-top: 8px;
+    margin-right: 10%;
+  }
+`;
+
 const ConfigBar = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 30px;
+  margin-left: 20px;
   justify-content: space-between;
   width: 180px;
   h2 {
@@ -184,31 +170,32 @@ const ConfigBar = styled.div`
   }
 `;
 
-const IconWrappler = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin-top: 12px;
-  margin-right: 8px;
-`;
-
 const UserDataWrappler = styled.div`
-  width: 100px;
   display: flex;
   height: 100%;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-evenly;
   flex-direction: column;
+  margin-left: 20px;
+  margin-right: 50px;
+
   img {
     width: 45px;
     height: 45px;
     border-radius: 30px;
     outline: 2px solid #de0f62;
     cursor: pointer;
+    margin-left: 20px;
+    
+  }
+  @media screen and (max-width: 752px) {
+    img {
+      width: 35px;
+      height: 35px;
+    }
   }
 `;
 const RegionWrappler = styled.div`
-  width: 150px;
   display: flex;
   height: 100%;
   justify-content: center;
@@ -216,6 +203,7 @@ const RegionWrappler = styled.div`
   h2 {
     margin: 10px;
     cursor: unset;
+    min-width: 50px;
   }
   img {
     width: 25px;

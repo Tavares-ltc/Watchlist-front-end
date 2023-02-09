@@ -35,6 +35,13 @@ const AvatarWrappler = styled.div`
   width: fit-content;
   background-color: grey;
   border-radius: 10px;
+  @media screen and (max-width: 750px) {
+    width: 50vw;
+    flex-wrap: wrap;
+    max-height: unset;
+    height: fit-content;
+    margin-bottom: 30px;
+  }
 `;
 
 const ImagesContainer = styled.div`
@@ -42,6 +49,11 @@ const ImagesContainer = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: space-evenly;
+  @media screen and (max-width: 750px) {
+    flex-wrap: wrap;
+    max-height: unset;
+    height: fit-content;
+  }
 `;
 
 const ImageStyle = styled.div`

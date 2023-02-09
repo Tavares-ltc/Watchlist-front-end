@@ -37,5 +37,17 @@ const LogoWrappler = styled.div`
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
   }
+  @media screen and (max-width: 750px) {
+    h6 {
+      font-size: 30px;
+    }
+  }
+  @media screen and (max-width: 410px) {
+    h6 {
+      font-size: 20px;
+    }
+  }
+  
+  
   z-index: 1;
 `;

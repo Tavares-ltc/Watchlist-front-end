@@ -178,7 +178,6 @@ function Providers({ providers }) {
 }
 
 const MoreDetailsContainer = styled.div`
-  width: 365px;
   transition: linear 0.5s;
   position: absolute;
   background-color: rgba(42, 41, 41, 0.899);
@@ -186,13 +185,15 @@ const MoreDetailsContainer = styled.div`
   bottom: 0;
   margin: 10px;
   overflow: hidden;
+  width: 93%;
   &:hover {
     height: 250px;
   }
 `;
 const ImageContainer = styled.div`
+  width: fit-content;
+  background-color: bisque;
   position: relative;
-  width: 385px;
   img {
     cursor: pointer;
   }

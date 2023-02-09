@@ -27,5 +27,12 @@ const UserSectionWrappler = styled.div`
     width: 80px;
     height: 80px;
     outline: 5px solid #3d3d3d;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: 900px) {
+    h1 {
+      font-size: 18px;
+      margin-right: 10px;
+    }
   }
 `;

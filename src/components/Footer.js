@@ -45,6 +45,7 @@ const FooterWrappler = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
   h1 {
     font-size: 25px;
     color: #de0f62;
@@ -56,5 +57,13 @@ const FooterWrappler = styled.div`
     color: white;
     cursor: pointer;
     margin-bottom: 15px;
+  }
+  @media screen and (max-width: 900px) {
+    h1 {
+      font-size: 18px;
+    }
+    h2 {
+      font-size: 18px;
+    }
   }
 `;

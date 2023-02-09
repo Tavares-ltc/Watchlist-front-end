@@ -16,7 +16,6 @@ export default function LoginPage({ action }) {
       <Background>
         <Modal
           isVisible={true}
-          height={"890px"}
           closeFunction={() => {
             navigate("/");
           }}
@@ -65,7 +64,10 @@ const FormWrappler = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: fit-content;
   h2 {
+    margin-top: 10px;
+    text-align: center;
     margin-bottom: 50px;
     color: white;
     b:first-of-type {
@@ -82,6 +84,7 @@ const FormWrappler = styled.div`
     }
   }
   h3 {
+    text-align: center;
     margin-top: 15px;
     text-decoration: underline;
     color: #de0f62;
@@ -113,5 +116,28 @@ const FormWrappler = styled.div`
       -ms-user-select: none; /* IE 10 and IE 11 */
       user-select: none; /* Standard syntax */
     }
+    @media screen and (max-width: 900px) {
+      h2 {
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+      input {
+        width: 50vw;
+      }
+    }
+    @media screen and (max-width: 750px) {
+      label {
+        font-size: 18px;
+      }
+      p {
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+    }
   }
+  @media screen and (max-width: 750px) {
+      h2{
+        margin-bottom: 20px;
+      }
+    }
 `;

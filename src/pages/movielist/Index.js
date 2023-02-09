@@ -9,9 +9,9 @@ import useSearchMovie from "../../hooks/api/useSearch";
 import { Background } from "../../components/Background";
 import { AccountMenuModal } from "./AccountMenuModal";
 import { PageLoading } from "../../components/PageLoading";
-
 export default function MovielistPage({ moviesCategory }) {
   const [moviesCategoryType, setMoviesCategoryType] = useState(moviesCategory);
+
 
   const { ref, inView } = useInView();
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,13 +20,11 @@ export default function MovielistPage({ moviesCategory }) {
   const { searchMovies } = useSearchMovie();
   const [movies, setMovies] = useState([]);
   const [hasMorePages, setHasMorePages] = useState(true);
-
   const [isAccountModalVisible, setIsAccountModalVisible] = useState(false);
 
   let query = useQuery();
   const [movieId, setMovieId] = useState(query.get("movieId"));
   const [searchQuery, setSearchQuery] = useState(query.get("term"));
-
   useEffect(() => {
     fechData(moviesCategoryType);
   }, [inView]);

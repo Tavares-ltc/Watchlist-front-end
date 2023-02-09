@@ -18,10 +18,10 @@ export function MovieBox({ children, genres, movieId }) {
 const MovieBoxWrappler = styled.div`
   width: 240px;
   position: relative;
-
+  
   img {
-    width: 90%;
     height: 297px;
+    width: 90%;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
@@ -30,6 +30,25 @@ const MovieBoxWrappler = styled.div`
   &:hover {
     transform: scale(1.1);
   }
+  @media screen and (max-width: 1200px) {
+    width: 170px;
+    img {
+      height: 220px;
+    }
+    h1 {
+      font-size: 12px;
+    }
+  }
+  @media screen and (max-width: 410px) {
+    width: 130px;
+    img {
+      height: 180px;
+    }
+    h1 {
+      font-size: 12px;
+    }
+  }
+  
 `;
 const GenreWrappler = styled.div`
   height: 40px;

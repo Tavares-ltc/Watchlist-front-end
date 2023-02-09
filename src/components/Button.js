@@ -34,9 +34,22 @@ const ButtonWrappler = styled.div`
       text-decoration: none;
       font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : "16px")};
     }
+    @media screen and (max-width: 752px) {
+      width: ${(props) => (props.width ? `${props.width}` : "40px")};
+      height: ${(props) => (props.height ? `${props.height}` : "30px")};
+      h3 {
+        font-size: ${(props) =>
+          props.fontSize ? `${props.fontSize}` : "12px"};
+      }
+    }
   }
   &:hover {
     transition: all 1s;
     outline: 3px solid #de0f62;
+  }
+  @media screen and (max-width: 752px) {
+    width: ${(props) => (props.width ? `${props.width}` : "40px")};
+    height: ${(props) => (props.height ? `${props.height}` : "20px")};
+
   }
 `;
