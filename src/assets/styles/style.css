@@ -3,12 +3,13 @@
 * {
   box-sizing: border-box;
   transition: all ease 0.2s;
+
 }
 
 body {
   font-family: "Lexend Deca", sans-serif;
   overflow-x: hidden;
-  }
+}
 .Toastify__toast.Toastify__toast--default {
   max-height: 130px;
 }
@@ -22,14 +23,13 @@ body {
 }
 
 .Toastify__toast-container {
-margin-top: 50px;
-margin-right: 10%;
---toastify-color-progress-dark: linear-gradient(
-  to right,
-  #de0f62,
-  #de0f62,
-  #dc3a34,
-  #f16305
-);
+  margin-top: 50px;
+  margin-right: 10%;
+  --toastify-color-progress-dark: linear-gradient(
+    to right,
+    #de0f62,
+    #de0f62,
+    #dc3a34,
+    #f16305
+  );
 }
-

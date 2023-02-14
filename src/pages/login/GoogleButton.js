@@ -98,7 +98,7 @@ const ButtonWrappler = styled.div`
 `;
 
 const ImgWrappler = styled.div`
-  height: 100%;
+  height: 65px;
   width: 65px;
   display: flex;
   justify-content: center;

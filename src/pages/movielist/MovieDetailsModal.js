@@ -122,13 +122,15 @@ const LoadingContainer = styled.div`
 
 const DetailsModalWrappler = styled.div`
   z-index: 1;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   box-sizing: border-box;
   height: 100%;
   padding: 40px 20px;
+  h1 {
+    pointer-events: none;
+  }
   @media screen and (max-width: 900px) {
    text-align: center;
    height: fit-content;
@@ -149,6 +151,7 @@ const ContentWrappler = styled.div`
   height: 89%;
   display: flex;
   justify-content: space-between;
+
   @media screen and (max-width: 900px) {
     flex-direction: column;
     align-items: center;
@@ -159,7 +162,8 @@ const ContentWrappler = styled.div`
 const LeftSide = styled.div`
   min-width: fit-content;
   width: 30vw;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  
 
   img {
     width: 23vw;
@@ -177,7 +181,7 @@ const LeftSide = styled.div`
     width: fit-content;
     overflow: unset;
     img{
-      width: 50vw;
+      width: 60vw;
       max-width: unset;
     }
   }
@@ -236,8 +240,8 @@ const RightSide = styled.div`
     width: 60vw;
     height: fit-content;
     iframe {
-      width: 60vw;
-      height: 40vw;
+      width: 70vw;
+      height: 45vw;
     }
     margin-bottom: 30px;
   }

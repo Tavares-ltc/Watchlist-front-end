@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
 
-export function Modal({ children, isVisible, closeFunction, ...props }) {
+export function Modal({ isVisible, closeFunction, children, ...props }) {
   if (isVisible && !closeFunction) {
     return (
       <ModalContainer {...props}>
@@ -22,7 +22,7 @@ export function Modal({ children, isVisible, closeFunction, ...props }) {
           <CloseButton>
             <IoMdClose color='white' size={"20px"} onClick={closeFunction} />
           </CloseButton>
-          {children}
+          <>{children}</>
         </ModalWrappler>
       </ModalContainer>
     );
@@ -30,6 +30,7 @@ export function Modal({ children, isVisible, closeFunction, ...props }) {
 const ModalContainer = styled.div`
   width: 100vw;
   height: 100vh;
+
   position: fixed;
   z-index: 1;
   background-color: rgba(17, 17, 17, 0.23);
@@ -44,6 +45,7 @@ const ModalWrappler = styled.div`
   filter: drop-shadow(30px 10px 20px #000000);
   width: ${(props) => (props.width ? `${props.width}` : "70vw")};
   height: ${(props) => (props.height ? `${props.height}` : "94vh")};
+  min-width: 300px !important;
 
   border-radius: 20px;
   background-color: #171c25;
@@ -57,16 +59,17 @@ const ModalWrappler = styled.div`
   }
   @media screen and (max-width: 900px) {
     overflow-y: scroll;
+    width: ${(props) => (props.width ? `${props.width}` : "80vw")};
   }
- 
- max-height: fit-content;
+
+  max-height: fit-content;
 `;
 
 const CloseButton = styled.div`
-  position: fixed;
   cursor: pointer;
+  position: fixed;
   right: 0;
   top: 0;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-right: 20px;
 `;
