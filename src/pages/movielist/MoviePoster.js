@@ -186,6 +186,7 @@ const MoreDetailsContainer = styled.div`
   margin: 10px;
   overflow: hidden;
   width: 93%;
+  
   &:hover {
     height: 250px;
   }
@@ -194,6 +195,8 @@ const ImageContainer = styled.div`
   width: fit-content;
   background-color: bisque;
   position: relative;
+  display: flex;
+  justify-content: center;
   img {
     cursor: pointer;
   }
@@ -205,12 +208,18 @@ const MoreDetailsWrappler = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  display:flex ;
   h1 {
     color: white;
     text-align: center;
     font-size: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+  @media screen and (max-width: 1000px) {
+   h1 {
+    font-size: 25px;
+   }
   }
   @media screen and (max-width: 640px) {
    h1 {
@@ -261,7 +270,7 @@ const NavBar = styled.div`
   justify-content: space-between;
   h3 {
     color: red;
-    font-size: 18px;
+    font-size: 15px;
     margin: 10px;
     cursor: pointer;
     z-index: 1;
@@ -273,11 +282,6 @@ const NavBar = styled.div`
       color: #de0f62;
       text-align: end;
     }
-  }
-  @media screen and (max-width: 640px) {
-   h3{
-    font-size: 15px;
-   }
   }
 `;
 const FixedIcon = styled.div`

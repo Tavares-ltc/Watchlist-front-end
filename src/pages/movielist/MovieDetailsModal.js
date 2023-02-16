@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 import styled from "styled-components";
 import { Modal } from "../../components/Modal";
 import { StarsRating } from "../../components/StarsRating";
+import { AuthContext } from "../../contexts/AuthContext";
 import useMovieDetails from "../../hooks/api/useMovieDetails";
 import useWidth from "../../hooks/useWidth";
 import { MoviePoster } from "./MoviePoster";
@@ -14,7 +15,7 @@ export function MovieDetails({ movieId, setMovieId }) {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [width] = useWidth();
-
+  const {userData} = useContext(AuthContext)
   useEffect(() => {
     async function fechMovieData(movieId) {
       const movieData = await getMovieDetails(movieId);
@@ -49,7 +50,7 @@ export function MovieDetails({ movieId, setMovieId }) {
             <MoviePoster details={details} />
             <TextContainer>
               <h1>Release date:</h1>
-              <h2>({releaseDate(details?.release_date)})</h2>
+              <h2>({releaseDate(details?.release_date, userData.language)})</h2>
             </TextContainer>
             {details?.watchlist_id && (
               <StarsRating
@@ -98,7 +99,7 @@ export function MovieDetails({ movieId, setMovieId }) {
   }
 }
 
-function releaseDate(date, format = "en-Us") {
+function releaseDate(date, format = "en-US") {
   if (date) {
     const arrDate = date.split("-");
 

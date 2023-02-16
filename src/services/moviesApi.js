@@ -1,12 +1,12 @@
 import api from "./api";
 
 async function getMovies(category = "popular", language="en-US", page = 1) {
-  const response = await api.get(`/movies/${category}?${language}&page=${page}`);
+  const response = await api.get(`/movies/${category}?language=${language}&page=${page}`);
   return response.data;
 }
 
-async function getMovieDetails(movieId) {
-  const response = await api.get(`/movie/${movieId}`);
+async function getMovieDetails(movieId, language="en-US") {
+  const response = await api.get(`/movie/${movieId}?language=${language}`);
   return response.data;
 }
 

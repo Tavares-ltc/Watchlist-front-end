@@ -10,9 +10,9 @@ import useWidth from "../hooks/useWidth";
 
 export default function Header({ setIsAccountModalVisible }) {
   const navigate = useNavigate();
-  const { userData } = useContext(AuthContext);
+  const { userData, setUserData } = useContext(AuthContext);
+  
   const [width] = useWidth();
-
   return (
     <>
       <HeaderWrappler>
@@ -30,12 +30,7 @@ export default function Header({ setIsAccountModalVisible }) {
         </SearchBar>
         <ConfigBar>
           <RegionWrappler>
-            <img
-              src={
-                "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/255px-Flag_of_the_United_States.svg.png"
-              }
-            />
-            {width > 780 && <h2>en-US</h2>}
+            <RegionIcon language={userData.language} width={width} switchFunction={switchLanguage}/>
           </RegionWrappler>
           <LoginButton
             userData={userData}
@@ -47,6 +42,14 @@ export default function Header({ setIsAccountModalVisible }) {
     </>
   );
 
+  function switchLanguage() {
+    if (!userData.language || userData.language === "en-US") {
+      setUserData({ ...userData, language: "pt-BR" });
+    } else {
+      setUserData({ ...userData, language: "en-US" });
+    }
+    window.location.reload()
+  }
   function searchMovie(event) {
     if (event.target?.value?.length > 0) {
       const starterText = event.target?.value;
@@ -84,6 +87,30 @@ function LoginButton({ userData, navigate, setIsAccountModalVisible }) {
       </UserDataWrappler>
     );
   }
+}
+function RegionIcon({ language, width, switchFunction }) {
+  if (language === "pt-BR") {
+    return (
+      <>
+        <img onClick={()=> switchFunction()}
+          src={
+            "https://img.freepik.com/vetores-gratis/ilustracao-de-bandeira-brasil_53876-27017.jpg"
+          }
+        />
+        {width > 780 && <h2 onClick={()=> switchFunction()}>pt-BR</h2>}
+      </>
+    );
+  }
+  return (
+    <>
+      <img onClick={()=> switchFunction()}
+        src={
+          "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/255px-Flag_of_the_United_States.svg.png"
+        }
+      />
+      {width > 780 && <h2 onClick={()=> switchFunction()}>en-US</h2>}
+    </>
+  );
 }
 
 const HeaderWrappler = styled.div`
@@ -135,8 +162,7 @@ const SearchBar = styled.div`
     min-width: 70px;
     input {
       font-size: 10px;
-      &::placeholder{
-        
+      &::placeholder {
       }
     }
   }
@@ -186,7 +212,6 @@ const UserDataWrappler = styled.div`
     outline: 2px solid #de0f62;
     cursor: pointer;
     margin-left: 20px;
-    
   }
   @media screen and (max-width: 752px) {
     img {
@@ -200,6 +225,7 @@ const RegionWrappler = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   h2 {
     margin: 10px;
     cursor: unset;
