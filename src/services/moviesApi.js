@@ -1,6 +1,6 @@
 import api from "./api";
 
-async function getMovies(category = "popular", language="en-US", page = 1) {
+async function getMovies(category = "popular", page = 1, language = "en-US") {
   const response = await api.get(`/movies/${category}?language=${language}&page=${page}`);
   return response.data;
 }

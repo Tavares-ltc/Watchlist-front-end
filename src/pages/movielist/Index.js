@@ -57,7 +57,7 @@ export default function MovielistPage({ moviesCategory }) {
     if (moviesCategory === "search") {
       promise = await searchMovies(currentPage, searchQuery);
     } else {
-      promise = await getMovies(moviesCategory, "en-Us", currentPage);
+      promise = await getMovies(moviesCategory, currentPage);
     }
     if (promise.results.length === 0) return setHasMorePages(false);
 
